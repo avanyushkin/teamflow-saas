@@ -26,6 +26,7 @@ export default function Register() {
     }
 
     return (
+        <div className = "flex min-h-screen items-center justify-center bg-background px-4">
         <Card className="w-full sm:max-w-md">
             <CardHeader>
                 <CardTitle>Registration</CardTitle>
@@ -80,5 +81,6 @@ export default function Register() {
                 </CardFooter>
             </form>
         </Card>
+        </div>
     );
 }
