@@ -2,15 +2,15 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
-import formSchema from "./zod-schema";
+import { formSchemaRegister } from "../zod-schemas";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 export default function Register() {
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<z.infer<typeof formSchemaRegister>>({
+        resolver: zodResolver(formSchemaRegister),
         defaultValues: {
             firstName: "",
             lastName: "",
@@ -21,7 +21,7 @@ export default function Register() {
         },
     });
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
+    function onSubmit(values: z.infer<typeof formSchemaRegister>) {
         console.log(values);
     }
 

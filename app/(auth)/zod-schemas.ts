@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const formSchema = z.object({
+const formSchemaRegister = z.object({
     firstName: z.string().min(2, "First Name must be at least 2 characters").max(32, "First name must be at most 32 characters"),
     lastName: z.string().min(2, "Last Name must be at least 2 characters").max(32, "Last name must be at most 32 characters"),
     username: z.string().min(4, "Username must be at least 4 characters").max(32, "Username must be at most 32 characters"),
@@ -12,4 +12,12 @@ const formSchema = z.object({
     path: ["confirmPassword"],
 });
 
-export default formSchema;
+const formSchemaLogin = z.object({
+    username: z.string(),
+    password: z.string()
+}).refine((data) => data.password === data.password, {
+    message: "Incorrect password",
+    path: ["password"],
+})
+
+export {formSchemaRegister, formSchemaLogin};
