@@ -7,6 +7,7 @@ import { z } from "zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";    
 import { Label } from "@/components/ui/label";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const form = useForm<z.infer<typeof formSchemaLogin>>({
@@ -20,6 +21,12 @@ export default function Login() {
   function onSubmit(values: z.infer<typeof formSchemaLogin>) {
     console.log(values);
   }
+
+  const router = useRouter();
+  const handlePageRedirect = () => {
+    router.push("/register");
+  }
+
   return (
     <>
         <div className = "flex min-h-screen items-center justify-center bg-background px-4">
@@ -36,7 +43,10 @@ export default function Login() {
                         <Input id = "password" type = "password" {...form.register("password")}/>
                     </CardContent>
                     <CardFooter className = "flex-col gap-2">
-                        <Button type = "submit" className = "w-full">Login</Button>
+                        <div className = "flex gap-4 w-full">
+                            <Button type = "submit" className = "flex-1">Login</Button>
+                            <Button type = "button" className = "flex-1" onClick = {handlePageRedirect}>Register</Button>
+                        </div>
                         <Button type="button" variant="outline" className="w-full">Login with Google</Button>
                         <Button type="button" variant="outline" className="w-full">Login with GitHub</Button>
                     </CardFooter>
