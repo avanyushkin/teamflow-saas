@@ -15,4 +15,4 @@ model Account { ... }, эта модель - стандартная структ
 model Session { ... } - фактически не используется для ранения сессий (JWT хранится только в подписанной cookie, без обращения к базе на каждый запрос) - но Prisma Adapter все равно требует эту модель в схеме для совместимости с OAuth-логикой
 ```
 
-// изображение схемы работы
+![db-workflow](https://github.com/avanyushkin/teamflow-saas/blob/feature/(auth)/images/db-workflow.png)
