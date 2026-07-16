@@ -16,3 +16,12 @@ model Session { ... } - фактически не используется дл�
 ```
 
 ![db-workflow](https://github.com/avanyushkin/teamflow-saas/blob/feature/(auth)/images/db-workflow.png)
+
+# Реализация авторизации
+
+## bcryptjs
+```
+npm install bcryptjs
+```
+
+- server action для регистрации

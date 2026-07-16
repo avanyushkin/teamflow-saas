@@ -11,7 +11,11 @@ import { useRouter } from "next/navigation";
 
 export default function Register() {
     const form = useForm<z.infer<typeof formSchemaRegister>>({
-        resolver: zodResolver(formSchemaRegister),
+        resolver: zodResolver(formSchemaRegister), // валидирует данные, но это происходит в браузере
+                                                   // в js коде, который пользователь полностью контролирует
+                                                   // Он может открыть DevTools, отключить JS-валидацию или напрямую
+                                                   // дернуть server action с любыми данными, минуя форму
+                                                   // Поэтому на сервере нужно еще раз прогнать данные через туже форму
         defaultValues: {
             firstName: "",
             lastName: "",

@@ -13,11 +13,9 @@ const formSchemaRegister = z.object({
 });
 
 const formSchemaLogin = z.object({
-    username: z.string(),
-    password: z.string()
-}).refine((data) => data.password === data.password, {
-    message: "Incorrect password",
-    path: ["password"],
-})
+    username: z.string().min(4, "Username must be at least 4 characters").max(32, "Username must be at most 32 characters"),
+    password: z.string().min(8, "Password must be at least 8 characters").max(64, "Password must be at most 64 characters"),
+});
+// удалил проверку на верность пароля, добавил проверку логина и пароля
 
 export {formSchemaRegister, formSchemaLogin};
