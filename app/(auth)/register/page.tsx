@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { registerUser } from "@/app/api/auth/actions";
 
 export default function Register() {
     const form = useForm<z.infer<typeof formSchemaRegister>>({
@@ -15,7 +16,7 @@ export default function Register() {
                                                    // в js коде, который пользователь полностью контролирует
                                                    // Он может открыть DevTools, отключить JS-валидацию или напрямую
                                                    // дернуть server action с любыми данными, минуя форму
-                                                   // Поэтому на сервере нужно еще раз прогнать данные через туже форму
+                                                   // Поэтому на сервере нужно еще раз прогнать данные через туже zod-схему
         defaultValues: {
             firstName: "",
             lastName: "",
@@ -26,8 +27,17 @@ export default function Register() {
         },
     });
 
-    function onSubmit(values: z.infer<typeof formSchemaRegister>) {
-        console.log(values);
+    async function onSubmit(values: z.infer<typeof formSchemaRegister>) {
+        const result = await registerUser(values);
+        if (result.ok) {
+            handlePageRedirect();
+            // если результат положительный (такого юзера нет и форма заполнена корректно)
+            // редиректим на страницу логина
+        } else {
+            form.setError(result.field || "root", { message: result.message });
+            // если результат отрицательный (такой юзер уже есть или форма заполнена некорректно)
+            // показываем ошибку в форме
+        }
     }
 
     const router = useRouter();
@@ -45,6 +55,9 @@ export default function Register() {
             </CardHeader>
             <form onSubmit={form.handleSubmit(onSubmit)}>
                 <CardContent>
+                    {form.formState.errors.root && (
+                       <p className="text-sm text-red-500">{form.formState.errors.root.message}</p>
+                    )}
                     <div className="flex flex-col gap-6">
                         <div className="grid gap-2">
                             <Label htmlFor="firstName">First Name</Label>
