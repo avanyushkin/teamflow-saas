@@ -8,6 +8,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 // провайдер для кастомной авторизации через логин/пароль
 import bcrypt from "bcryptjs"; // для хэширования пароля
 import { prisma } from "@/lib/prisma"; // для работы с БД через Prisma
+import GithubProvider from "next-auth/providers/github";
 
 export const authConfig: AuthOptions = {
     providers: [
@@ -44,7 +45,11 @@ export const authConfig: AuthOptions = {
                 }
                 return {id: user.id, name: user.username, email: user.email};
             }
-        })
+        }),
+        GithubProvider({
+            clientId: process.env.GITHUB_ID!,
+            clientSecret: process.env.GITHUB_SECRET!,
+        }),
     ],
     session: {
         strategy: "jwt", // используем JWT вместо сессий в БД
@@ -61,6 +66,48 @@ export const authConfig: AuthOptions = {
                 session.user.id = token.id as string;
             }
             return session;
+        },
+
+        async signIn({user, account, profile}) {
+            if (account?.provider === "credentials") {
+                return true;
+            }
+
+            const email = profile?.email;
+            if (!email) {
+                return false;
+            } // провалидировали email
+
+            const existingUser = await prisma.user.findUnique({where: {email: email}});
+            if (existingUser) {
+                user.id = existingUser.id;
+                return true;
+            }
+
+            let new_username = email.split("@")[0]; // берем уже провалидированный email
+            while (await prisma.user.findUnique({where: {username: new_username}})) {
+                new_username = new_username + "a";
+            }
+
+            // profile.name может быть указано как Иван Иванов, а в нашей схеме есть обязательные
+            // поля FirstName, LastName - поэтому разобьем profile.name по пробелу
+            const fullName = profile?.name?.trim() || new_username;
+            const [firstName, ...rest] = fullName.split(" ");
+            const lastName = rest.join(" ") || "-";
+            
+            // создадим пользователя в БД
+            const createdUser = await prisma.user.create({
+                data: {
+                    firstName,
+                    lastName,
+                    username: new_username,
+                    email,
+                },
+            }); // пароль по умолчанию null
+
+            user.id = createdUser.id; // присваиваем новый id, чтобы jwt callback получил
+            // id из нашей БД а не тот, который прислал google/github
+            return true;
         }
     }
 }

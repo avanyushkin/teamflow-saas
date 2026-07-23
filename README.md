@@ -17,7 +17,7 @@ model Account { ... }, эта модель - стандартная структ
 model Session { ... } - фактически не используется для ранения сессий (JWT хранится только в подписанной cookie, без обращения к базе на каждый запрос) - но Prisma Adapter все равно требует эту модель в схеме для совместимости с OAuth-логикой
 ```
 
-## Два разных потребителя базы данных
+### Два разных потребителя базы данных
 
 Есть два независимых процесса, которым нужна база данных, и у каждого — свой файл конфигурации:
 ```
@@ -45,11 +45,52 @@ model Session { ... } - фактически не используется дл�
 
 ![db-workflow](https://github.com/avanyushkin/teamflow-saas/blob/feature/(auth)/images/db-workflow2.png)
 
-# Реализация авторизации
+## Реализация системы авторизации
 
-## bcryptjs
-```
-npm install bcryptjs
-```
+### Поток 1 (регистрация без NextAuth)
 
-- server action для регистрации
+1. register/page.tsx onSubmit(values) ->
+2. actions.ts registerUser(values)
+     - formSchemaRegister.safaParse - револидация
+     - prisma.user.findFirst - проверка уникальности username/email
+     - bcrypt.hash(password) - хэш пароля
+     - prisma.user.create - запись в БД (таблица User)
+     - return ok: true -> router.push('/login')
+Это отдельная от NextAuth ветка - она не проходит ни через providers, ни через callbacks. NextAuth здась вообще не учавствует, только Prisma напрямую
+
+### Поток 2 (логин через Credentials (username/password))
+
+1. login/page.tsx signIn('credentials', {username, password, redirect: false}) ->
+2. [...nextauth]/route.ts это http-точка, куда физически литит запрос и передает управление в authConfig ->
+3. auth.ts CredentialsProvider(credentials)
+    - prisma.user.findUnique(username) -> bcrypt.compare(password, user.password) возарвщает {id, name, email} или null -> 
+    - callbacks.signIn({user, account}) account.provider === "credentials" -> сразу return true (доверяем authorize) -> 
+    - callbacks.jwt({token, user}) user есть только в момент самого входа -> token.id = user.id ->
+    - callbacks.session({session, token}) session.user.id = token.id ->
+    - браузер получает JWT в cookie (next-auth.session.token) ->
+    - login/page.tsx получает (ok: true) -> router.push("/")
+
+### Поток 3 (логин через OAuth (google / github))
+
+1. login/page.tsx signIn("google") / signIn("github") ->
+2. редирект на consent-экран Google/Github (пользователь подтверждает доступ) ->
+3. Google/GitHub редиректит обратно на /api/auth/callback/google (это url, который регистрируется на Google/GitHub console) ->
+4. auth.ts callbacks.signIn({user, account, profile}) если нашли юзера user.id = exitingUser.id, если не нашли то генерируем юзернейм и разбиваем firstName/lastName ->
+   auth.ts callbacks.jwt({token, user}) token.id = user.id - та же функция, что и в потоке 2 ->
+   auth.ts callbacks.session ->
+   JWT-cookie в браузере, редирект обратно в приложение
+
+Почему signIn callback вообще нужен именно для OAuth: в потоке 
+Credentials пользователь уже гарантировано существует в БД (его нашел 
+authorize). А в OAuth потоке NextAuth ничего не знает про таблицу User
+- google просто дает почту и имя этого пользователя. Именно для этого
+callbacks.jwt / callbacks.session - общие для всех провайдеров, а логика
+заполнения user.id разная: для Credentials ее делает authorize, для OAuth - signIn
+
+### Потом 4 (проверка сессии при заходе на любую страницу)
+
+1. Запрос к /login или /register ->
+2. middleware.ts getToken({req, secret: }) - читает и проверяет JWT прямо из cookie
+без обращения к authConfig целиком (edge runtime, легкая проверка)
+token === null -> не залогинен, пускаем на /login /register
+token !== null - залогинен, пускаем на общие страницы
