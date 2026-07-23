@@ -81,8 +81,12 @@ export default function Login() {
                             <Button type = "submit" className = "flex-1">Login</Button>
                             <Button type = "button" className = "flex-1" onClick = {handlePageRedirect}>Register</Button>
                         </div>
-                        <Button type="button" variant="outline" className="w-full">Login with Google</Button>
-                        <Button type="button" variant="outline" className="w-full">Login with GitHub</Button>
+                        <Button type="button" variant="outline" className="w-full"
+                            onClick = {() => signIn("google")}
+                        >Login with Google</Button>
+                        <Button type="button" variant="outline" className="w-full"
+                            onClick = {() => signIn("github")}
+                        >Login with GitHub</Button>
                     </CardFooter>
                 </form>
             </Card>

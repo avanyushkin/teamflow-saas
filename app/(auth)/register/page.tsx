@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { registerUser } from "@/app/api/auth/actions";
+import { signIn } from "next-auth/react";
 
 export default function Register() {
     const form = useForm<z.infer<typeof formSchemaRegister>>({
@@ -103,8 +104,12 @@ export default function Register() {
                         <Button type="submit" className="flex-1">Register</Button>
                         <Button type="button" className="flex-1" onClick = {handlePageRedirect}>Login</Button>
                     </div>
-                    <Button type="button" variant="outline" className="w-full">Login with Google</Button>
-                    <Button type="button" variant="outline" className="w-full">Login with GitHub</Button>
+                    <Button type="button" variant="outline" className="w-full"
+                        onClick = {() => signIn("google")}
+                    >Login with Google</Button>
+                    <Button type="button" variant="outline" className="w-full"
+                        onClick = {() => signIn("github")}
+                    >Login with GitHub</Button>
                 </CardFooter>
             </form>
         </Card>
