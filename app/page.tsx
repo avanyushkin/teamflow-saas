@@ -1,5 +1,18 @@
-export default function Home() {
+// серверный компонент, кнопку sign out выносим в другой файл, чтобы не смешивать
+
+import { getServerSession } from "next-auth";
+import { authConfig } from "@/app/configs/auth";
+import { SignOutButton } from "@/components/sign-out-button";
+
+export default async function Home() {
+  const session = await getServerSession(authConfig);
   return (
-    <div>Home page</div>
+    <>
+      <div>
+        <p>Welcome, {session?.user?.name}</p>
+        <p>{session?.user?.email}</p>
+        <SignOutButton />
+      </div>
+    </>
   );
 }
