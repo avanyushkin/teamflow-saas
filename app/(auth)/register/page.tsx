@@ -2,15 +2,22 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
-import formSchema from "./zod-schema";
+import { formSchemaRegister } from "../zod-schemas";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import { registerUser } from "@/app/api/auth/actions";
+import { signIn } from "next-auth/react";
 
 export default function Register() {
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<z.infer<typeof formSchemaRegister>>({
+        resolver: zodResolver(formSchemaRegister), // валидирует данные, но это происходит в браузере
+                                                   // в js коде, который пользователь полностью контролирует
+                                                   // Он может открыть DevTools, отключить JS-валидацию или напрямую
+                                                   // дернуть server action с любыми данными, минуя форму
+                                                   // Поэтому на сервере нужно еще раз прогнать данные через туже zod-схему
         defaultValues: {
             firstName: "",
             lastName: "",
@@ -21,11 +28,27 @@ export default function Register() {
         },
     });
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values);
+    async function onSubmit(values: z.infer<typeof formSchemaRegister>) {
+        const result = await registerUser(values);
+        if (result.ok) {
+            handlePageRedirect();
+            // если результат положительный (такого юзера нет и форма заполнена корректно)
+            // редиректим на страницу логина
+        } else {
+            form.setError(result.field || "root", { message: result.message });
+            // если результат отрицательный (такой юзер уже есть или форма заполнена некорректно)
+            // показываем ошибку в форме
+        }
+    }
+
+    const router = useRouter();
+
+    const handlePageRedirect = () => {
+        router.push("/login");
     }
 
     return (
+        <div className = "flex min-h-screen items-center justify-center bg-background px-4">
         <Card className="w-full sm:max-w-md">
             <CardHeader>
                 <CardTitle>Registration</CardTitle>
@@ -33,6 +56,9 @@ export default function Register() {
             </CardHeader>
             <form onSubmit={form.handleSubmit(onSubmit)}>
                 <CardContent>
+                    {form.formState.errors.root && (
+                       <p className="text-sm text-red-500">{form.formState.errors.root.message}</p>
+                    )}
                     <div className="flex flex-col gap-6">
                         <div className="grid gap-2">
                             <Label htmlFor="firstName">First Name</Label>
@@ -74,11 +100,19 @@ export default function Register() {
                     </div>
                 </CardContent>
                 <CardFooter className="flex-col gap-2">
-                    <Button type="submit" className="w-full">Register</Button>
-                    <Button type="button" variant="outline" className="w-full">Login with Google</Button>
-                    <Button type="button" variant="outline" className="w-full">Login with GitHub</Button>
+                    <div className = "flex w-full gap-4">
+                        <Button type="submit" className="flex-1">Register</Button>
+                        <Button type="button" className="flex-1" onClick = {handlePageRedirect}>Login</Button>
+                    </div>
+                    <Button type="button" variant="outline" className="w-full"
+                        onClick = {() => signIn("google")}
+                    >Login with Google</Button>
+                    <Button type="button" variant="outline" className="w-full"
+                        onClick = {() => signIn("github")}
+                    >Login with GitHub</Button>
                 </CardFooter>
             </form>
         </Card>
+        </div>
     );
 }
