@@ -115,3 +115,6 @@ npx prisma migrate dev --name add_card_and_card_member
 ```
 npx prisma studio
 ```
+
+4. zod-validation и actions.ts/createCard
+
