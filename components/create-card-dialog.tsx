@@ -17,19 +17,35 @@ import { Dialog, DialogTrigger, DialogContent,
  import { Button } from "@/components/ui/button";
  import { Input } from "@/components/ui/input";
  import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import z from "zod";
 import { useRouter } from "next/navigation";
+import { getUsers } from "@/app/(cards)/actions";
+import { Checkbox } from "@/components/ui/checkbox";
 
+type usersType = {
+  id: string,
+  username: string,
+  firstName: string,
+  lastName: string
+};
 
  export default function CardDialog() {
     const [open, setOpen] = useState(false);
     const router = useRouter();
+    const [users, setUsers] = useState<usersType[]>([]);
 
+    useEffect(() => {
+      if (open) {
+        getUsers().then(setUsers);
+      }
+    }, [open]);
+    
     const form = useForm<z.infer<typeof formSchemaCard>>({
       resolver: zodResolver(formSchemaCard),
-      defaultValues: {title: "", description: "" },
+      defaultValues: {title: "", description: "", memberIds: [], },
     });
+    const selectedIds = form.watch("memberIds");
 
     async function onSubmit(values: z.infer<typeof formSchemaCard>) {
       const result = await createCard(values);
@@ -42,16 +58,25 @@ import { useRouter } from "next/navigation";
       }
     }
 
+    function toggleMember(userId: string) {
+      const current = form.getValues("memberIds");
+      if (current.includes(userId)) {
+        form.setValue("memberIds", current.filter((id) => id !== userId));
+      } else {
+        form.setValue("memberIds", [...current, userId]);
+      }
+    }
+
     return (
     <>
       <Dialog open = {open} onOpenChange = {setOpen}>
         <DialogTrigger render = {<Button />}>
-          <Button>Create New Card</Button>
+          Create New Card
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Create New Card</DialogTitle>
-          </DialogHeader>
+          </DialogHeader>               
           <form onSubmit = {form.handleSubmit(onSubmit)} className = "flex flex-col gap-4">
             {form.formState.errors.root && (
               <p className = "text-sm text-red-500">{form.formState.errors.root?.message}</p>
@@ -67,6 +92,18 @@ import { useRouter } from "next/navigation";
             {form.formState.errors.description && (
               <p className = "text-sm text-red-500">{form.formState.errors.description.message}</p>
             )}
+
+            <Label>Members</Label>
+            <div className = "flex flex-col gap-2">
+              {users.map((user) => (
+                <div key = {user.id} className = "flex items-center gap-2">
+                  <Checkbox checked = {selectedIds.includes(user.id)}
+                    onCheckedChange = {() => toggleMember(user.id)}
+                  />
+                  <span>{user.username}</span>
+                </div>
+              ))}
+            </div>
 
             <Button type = "submit">Create</Button>
           </form>           

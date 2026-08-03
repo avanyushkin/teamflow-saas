@@ -119,3 +119,6 @@ npx prisma studio
 4. zod-validation и actions.ts/createCard
 
 ### Создание карточки
+
+1. Создал UI формы (Dialog) для создания карточки текущим юзером
+2. 

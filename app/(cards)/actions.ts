@@ -42,7 +42,27 @@ export async function createCard(values: z.infer<typeof formSchemaCard>): Promis
             role: "ADMIN",
         },
     });
+
+    if (parsed.data.memberIds.length > 0) {
+      await tx.cardMember.createMany({
+          data: parsed.data.memberIds.map((userId) => ({
+            cardId: card.id,
+            userId,
+            role: "MEMBER",
+          }))
+      });
+    }
   });
 
   return {ok: true};
+}
+
+export async function getUsers() {
+  const session = await getServerSession(authConfig);
+  return prisma.user.findMany({
+    where: session?.user?.id ? {id: { not: session.user.id}} : {}, // исключаем самого себя из списка, тк я и так владелец каточки
+    select: {id: true, username: true, firstName: true, lastName: true}, // берем только то, что нужно для отображения в списке
+                                                                         // (не тащим password / email и прочее лишнее на клиент)
+
+  })
 }
