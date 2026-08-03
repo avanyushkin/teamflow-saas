@@ -30,7 +30,7 @@ export default function Register() {
 
     async function onSubmit(values: z.infer<typeof formSchemaRegister>) {
         const result = await registerUser(values);
-        if (result.ok) {
+        if (result.ok) {                                                                                                    
             handlePageRedirect();
             // если результат положительный (такого юзера нет и форма заполнена корректно)
             // редиректим на страницу логина

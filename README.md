@@ -118,3 +118,4 @@ npx prisma studio
 
 4. zod-validation и actions.ts/createCard
 
+### Создание карточки
