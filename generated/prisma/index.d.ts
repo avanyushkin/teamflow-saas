@@ -28,6 +28,45 @@ export type Account = $Result.DefaultSelection<Prisma.$AccountPayload>
  * 
  */
 export type Session = $Result.DefaultSelection<Prisma.$SessionPayload>
+/**
+ * Model Card
+ * 
+ */
+export type Card = $Result.DefaultSelection<Prisma.$CardPayload>
+/**
+ * Model CardMember
+ * 
+ */
+export type CardMember = $Result.DefaultSelection<Prisma.$CardMemberPayload>
+
+/**
+ * Enums
+ */
+export namespace $Enums {
+  export const CardStatus: {
+  OPEN: 'OPEN',
+  CLOSED: 'CLOSED'
+};
+
+export type CardStatus = (typeof CardStatus)[keyof typeof CardStatus]
+
+
+export const CardRole: {
+  ADMIN: 'ADMIN',
+  MEMBER: 'MEMBER'
+};
+
+export type CardRole = (typeof CardRole)[keyof typeof CardRole]
+
+}
+
+export type CardStatus = $Enums.CardStatus
+
+export const CardStatus: typeof $Enums.CardStatus
+
+export type CardRole = $Enums.CardRole
+
+export const CardRole: typeof $Enums.CardRole
 
 /**
  * ##  Prisma Client ʲˢ
@@ -179,6 +218,26 @@ export class PrismaClient<
     * ```
     */
   get session(): Prisma.SessionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.card`: Exposes CRUD operations for the **Card** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Cards
+    * const cards = await prisma.card.findMany()
+    * ```
+    */
+  get card(): Prisma.CardDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.cardMember`: Exposes CRUD operations for the **CardMember** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CardMembers
+    * const cardMembers = await prisma.cardMember.findMany()
+    * ```
+    */
+  get cardMember(): Prisma.CardMemberDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -615,7 +674,9 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     Account: 'Account',
-    Session: 'Session'
+    Session: 'Session',
+    Card: 'Card',
+    CardMember: 'CardMember'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -631,7 +692,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "account" | "session"
+      modelProps: "user" | "account" | "session" | "card" | "cardMember"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -857,6 +918,154 @@ export namespace Prisma {
           }
         }
       }
+      Card: {
+        payload: Prisma.$CardPayload<ExtArgs>
+        fields: Prisma.CardFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CardFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CardPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CardFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CardPayload>
+          }
+          findFirst: {
+            args: Prisma.CardFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CardPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CardFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CardPayload>
+          }
+          findMany: {
+            args: Prisma.CardFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CardPayload>[]
+          }
+          create: {
+            args: Prisma.CardCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CardPayload>
+          }
+          createMany: {
+            args: Prisma.CardCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CardCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CardPayload>[]
+          }
+          delete: {
+            args: Prisma.CardDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CardPayload>
+          }
+          update: {
+            args: Prisma.CardUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CardPayload>
+          }
+          deleteMany: {
+            args: Prisma.CardDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CardUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CardUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CardPayload>[]
+          }
+          upsert: {
+            args: Prisma.CardUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CardPayload>
+          }
+          aggregate: {
+            args: Prisma.CardAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCard>
+          }
+          groupBy: {
+            args: Prisma.CardGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CardGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CardCountArgs<ExtArgs>
+            result: $Utils.Optional<CardCountAggregateOutputType> | number
+          }
+        }
+      }
+      CardMember: {
+        payload: Prisma.$CardMemberPayload<ExtArgs>
+        fields: Prisma.CardMemberFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CardMemberFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CardMemberPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CardMemberFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CardMemberPayload>
+          }
+          findFirst: {
+            args: Prisma.CardMemberFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CardMemberPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CardMemberFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CardMemberPayload>
+          }
+          findMany: {
+            args: Prisma.CardMemberFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CardMemberPayload>[]
+          }
+          create: {
+            args: Prisma.CardMemberCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CardMemberPayload>
+          }
+          createMany: {
+            args: Prisma.CardMemberCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CardMemberCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CardMemberPayload>[]
+          }
+          delete: {
+            args: Prisma.CardMemberDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CardMemberPayload>
+          }
+          update: {
+            args: Prisma.CardMemberUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CardMemberPayload>
+          }
+          deleteMany: {
+            args: Prisma.CardMemberDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CardMemberUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CardMemberUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CardMemberPayload>[]
+          }
+          upsert: {
+            args: Prisma.CardMemberUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CardMemberPayload>
+          }
+          aggregate: {
+            args: Prisma.CardMemberAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCardMember>
+          }
+          groupBy: {
+            args: Prisma.CardMemberGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CardMemberGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CardMemberCountArgs<ExtArgs>
+            result: $Utils.Optional<CardMemberCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -968,6 +1177,8 @@ export namespace Prisma {
     user?: UserOmit
     account?: AccountOmit
     session?: SessionOmit
+    card?: CardOmit
+    cardMember?: CardMemberOmit
   }
 
   /* Types for Logging */
@@ -1050,11 +1261,15 @@ export namespace Prisma {
   export type UserCountOutputType = {
     accounts: number
     sessions: number
+    ownedCards: number
+    cardMemberships: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     accounts?: boolean | UserCountOutputTypeCountAccountsArgs
     sessions?: boolean | UserCountOutputTypeCountSessionsArgs
+    ownedCards?: boolean | UserCountOutputTypeCountOwnedCardsArgs
+    cardMemberships?: boolean | UserCountOutputTypeCountCardMembershipsArgs
   }
 
   // Custom InputTypes
@@ -1080,6 +1295,51 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SessionWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountOwnedCardsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CardWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCardMembershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CardMemberWhereInput
+  }
+
+
+  /**
+   * Count Type CardCountOutputType
+   */
+
+  export type CardCountOutputType = {
+    members: number
+  }
+
+  export type CardCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    members?: boolean | CardCountOutputTypeCountMembersArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * CardCountOutputType without action
+   */
+  export type CardCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CardCountOutputType
+     */
+    select?: CardCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CardCountOutputType without action
+   */
+  export type CardCountOutputTypeCountMembersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CardMemberWhereInput
   }
 
 
@@ -1269,6 +1529,8 @@ export namespace Prisma {
     createdAt?: boolean
     accounts?: boolean | User$accountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
+    ownedCards?: boolean | User$ownedCardsArgs<ExtArgs>
+    cardMemberships?: boolean | User$cardMembershipsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1306,6 +1568,8 @@ export namespace Prisma {
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     accounts?: boolean | User$accountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
+    ownedCards?: boolean | User$ownedCardsArgs<ExtArgs>
+    cardMemberships?: boolean | User$cardMembershipsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1316,6 +1580,8 @@ export namespace Prisma {
     objects: {
       accounts: Prisma.$AccountPayload<ExtArgs>[]
       sessions: Prisma.$SessionPayload<ExtArgs>[]
+      ownedCards: Prisma.$CardPayload<ExtArgs>[]
+      cardMemberships: Prisma.$CardMemberPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1721,6 +1987,8 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     accounts<T extends User$accountsArgs<ExtArgs> = {}>(args?: Subset<T, User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ownedCards<T extends User$ownedCardsArgs<ExtArgs> = {}>(args?: Subset<T, User$ownedCardsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    cardMemberships<T extends User$cardMembershipsArgs<ExtArgs> = {}>(args?: Subset<T, User$cardMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CardMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2195,6 +2463,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: SessionScalarFieldEnum | SessionScalarFieldEnum[]
+  }
+
+  /**
+   * User.ownedCards
+   */
+  export type User$ownedCardsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Card
+     */
+    select?: CardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Card
+     */
+    omit?: CardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CardInclude<ExtArgs> | null
+    where?: CardWhereInput
+    orderBy?: CardOrderByWithRelationInput | CardOrderByWithRelationInput[]
+    cursor?: CardWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CardScalarFieldEnum | CardScalarFieldEnum[]
+  }
+
+  /**
+   * User.cardMemberships
+   */
+  export type User$cardMembershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CardMember
+     */
+    select?: CardMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CardMember
+     */
+    omit?: CardMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CardMemberInclude<ExtArgs> | null
+    where?: CardMemberWhereInput
+    orderBy?: CardMemberOrderByWithRelationInput | CardMemberOrderByWithRelationInput[]
+    cursor?: CardMemberWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CardMemberScalarFieldEnum | CardMemberScalarFieldEnum[]
   }
 
   /**
@@ -4455,6 +4771,2170 @@ export namespace Prisma {
 
 
   /**
+   * Model Card
+   */
+
+  export type AggregateCard = {
+    _count: CardCountAggregateOutputType | null
+    _min: CardMinAggregateOutputType | null
+    _max: CardMaxAggregateOutputType | null
+  }
+
+  export type CardMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    description: string | null
+    status: $Enums.CardStatus | null
+    createdAt: Date | null
+    ownerId: string | null
+  }
+
+  export type CardMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    description: string | null
+    status: $Enums.CardStatus | null
+    createdAt: Date | null
+    ownerId: string | null
+  }
+
+  export type CardCountAggregateOutputType = {
+    id: number
+    title: number
+    description: number
+    status: number
+    createdAt: number
+    ownerId: number
+    _all: number
+  }
+
+
+  export type CardMinAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    status?: true
+    createdAt?: true
+    ownerId?: true
+  }
+
+  export type CardMaxAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    status?: true
+    createdAt?: true
+    ownerId?: true
+  }
+
+  export type CardCountAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    status?: true
+    createdAt?: true
+    ownerId?: true
+    _all?: true
+  }
+
+  export type CardAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Card to aggregate.
+     */
+    where?: CardWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cards to fetch.
+     */
+    orderBy?: CardOrderByWithRelationInput | CardOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CardWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cards from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cards.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Cards
+    **/
+    _count?: true | CardCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CardMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CardMaxAggregateInputType
+  }
+
+  export type GetCardAggregateType<T extends CardAggregateArgs> = {
+        [P in keyof T & keyof AggregateCard]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCard[P]>
+      : GetScalarType<T[P], AggregateCard[P]>
+  }
+
+
+
+
+  export type CardGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CardWhereInput
+    orderBy?: CardOrderByWithAggregationInput | CardOrderByWithAggregationInput[]
+    by: CardScalarFieldEnum[] | CardScalarFieldEnum
+    having?: CardScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CardCountAggregateInputType | true
+    _min?: CardMinAggregateInputType
+    _max?: CardMaxAggregateInputType
+  }
+
+  export type CardGroupByOutputType = {
+    id: string
+    title: string
+    description: string | null
+    status: $Enums.CardStatus
+    createdAt: Date
+    ownerId: string
+    _count: CardCountAggregateOutputType | null
+    _min: CardMinAggregateOutputType | null
+    _max: CardMaxAggregateOutputType | null
+  }
+
+  type GetCardGroupByPayload<T extends CardGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CardGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CardGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CardGroupByOutputType[P]>
+            : GetScalarType<T[P], CardGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CardSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    status?: boolean
+    createdAt?: boolean
+    ownerId?: boolean
+    owner?: boolean | UserDefaultArgs<ExtArgs>
+    members?: boolean | Card$membersArgs<ExtArgs>
+    _count?: boolean | CardCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["card"]>
+
+  export type CardSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    status?: boolean
+    createdAt?: boolean
+    ownerId?: boolean
+    owner?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["card"]>
+
+  export type CardSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    status?: boolean
+    createdAt?: boolean
+    ownerId?: boolean
+    owner?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["card"]>
+
+  export type CardSelectScalar = {
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    status?: boolean
+    createdAt?: boolean
+    ownerId?: boolean
+  }
+
+  export type CardOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "status" | "createdAt" | "ownerId", ExtArgs["result"]["card"]>
+  export type CardInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    owner?: boolean | UserDefaultArgs<ExtArgs>
+    members?: boolean | Card$membersArgs<ExtArgs>
+    _count?: boolean | CardCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type CardIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    owner?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type CardIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    owner?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $CardPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Card"
+    objects: {
+      owner: Prisma.$UserPayload<ExtArgs>
+      members: Prisma.$CardMemberPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      description: string | null
+      status: $Enums.CardStatus
+      createdAt: Date
+      ownerId: string
+    }, ExtArgs["result"]["card"]>
+    composites: {}
+  }
+
+  type CardGetPayload<S extends boolean | null | undefined | CardDefaultArgs> = $Result.GetResult<Prisma.$CardPayload, S>
+
+  type CardCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CardFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CardCountAggregateInputType | true
+    }
+
+  export interface CardDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Card'], meta: { name: 'Card' } }
+    /**
+     * Find zero or one Card that matches the filter.
+     * @param {CardFindUniqueArgs} args - Arguments to find a Card
+     * @example
+     * // Get one Card
+     * const card = await prisma.card.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CardFindUniqueArgs>(args: SelectSubset<T, CardFindUniqueArgs<ExtArgs>>): Prisma__CardClient<$Result.GetResult<Prisma.$CardPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Card that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CardFindUniqueOrThrowArgs} args - Arguments to find a Card
+     * @example
+     * // Get one Card
+     * const card = await prisma.card.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CardFindUniqueOrThrowArgs>(args: SelectSubset<T, CardFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CardClient<$Result.GetResult<Prisma.$CardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Card that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CardFindFirstArgs} args - Arguments to find a Card
+     * @example
+     * // Get one Card
+     * const card = await prisma.card.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CardFindFirstArgs>(args?: SelectSubset<T, CardFindFirstArgs<ExtArgs>>): Prisma__CardClient<$Result.GetResult<Prisma.$CardPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Card that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CardFindFirstOrThrowArgs} args - Arguments to find a Card
+     * @example
+     * // Get one Card
+     * const card = await prisma.card.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CardFindFirstOrThrowArgs>(args?: SelectSubset<T, CardFindFirstOrThrowArgs<ExtArgs>>): Prisma__CardClient<$Result.GetResult<Prisma.$CardPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Cards that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CardFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Cards
+     * const cards = await prisma.card.findMany()
+     * 
+     * // Get first 10 Cards
+     * const cards = await prisma.card.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const cardWithIdOnly = await prisma.card.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CardFindManyArgs>(args?: SelectSubset<T, CardFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Card.
+     * @param {CardCreateArgs} args - Arguments to create a Card.
+     * @example
+     * // Create one Card
+     * const Card = await prisma.card.create({
+     *   data: {
+     *     // ... data to create a Card
+     *   }
+     * })
+     * 
+     */
+    create<T extends CardCreateArgs>(args: SelectSubset<T, CardCreateArgs<ExtArgs>>): Prisma__CardClient<$Result.GetResult<Prisma.$CardPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Cards.
+     * @param {CardCreateManyArgs} args - Arguments to create many Cards.
+     * @example
+     * // Create many Cards
+     * const card = await prisma.card.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CardCreateManyArgs>(args?: SelectSubset<T, CardCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Cards and returns the data saved in the database.
+     * @param {CardCreateManyAndReturnArgs} args - Arguments to create many Cards.
+     * @example
+     * // Create many Cards
+     * const card = await prisma.card.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Cards and only return the `id`
+     * const cardWithIdOnly = await prisma.card.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CardCreateManyAndReturnArgs>(args?: SelectSubset<T, CardCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CardPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Card.
+     * @param {CardDeleteArgs} args - Arguments to delete one Card.
+     * @example
+     * // Delete one Card
+     * const Card = await prisma.card.delete({
+     *   where: {
+     *     // ... filter to delete one Card
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CardDeleteArgs>(args: SelectSubset<T, CardDeleteArgs<ExtArgs>>): Prisma__CardClient<$Result.GetResult<Prisma.$CardPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Card.
+     * @param {CardUpdateArgs} args - Arguments to update one Card.
+     * @example
+     * // Update one Card
+     * const card = await prisma.card.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CardUpdateArgs>(args: SelectSubset<T, CardUpdateArgs<ExtArgs>>): Prisma__CardClient<$Result.GetResult<Prisma.$CardPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Cards.
+     * @param {CardDeleteManyArgs} args - Arguments to filter Cards to delete.
+     * @example
+     * // Delete a few Cards
+     * const { count } = await prisma.card.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CardDeleteManyArgs>(args?: SelectSubset<T, CardDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Cards.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CardUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Cards
+     * const card = await prisma.card.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CardUpdateManyArgs>(args: SelectSubset<T, CardUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Cards and returns the data updated in the database.
+     * @param {CardUpdateManyAndReturnArgs} args - Arguments to update many Cards.
+     * @example
+     * // Update many Cards
+     * const card = await prisma.card.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Cards and only return the `id`
+     * const cardWithIdOnly = await prisma.card.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CardUpdateManyAndReturnArgs>(args: SelectSubset<T, CardUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CardPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Card.
+     * @param {CardUpsertArgs} args - Arguments to update or create a Card.
+     * @example
+     * // Update or create a Card
+     * const card = await prisma.card.upsert({
+     *   create: {
+     *     // ... data to create a Card
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Card we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CardUpsertArgs>(args: SelectSubset<T, CardUpsertArgs<ExtArgs>>): Prisma__CardClient<$Result.GetResult<Prisma.$CardPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Cards.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CardCountArgs} args - Arguments to filter Cards to count.
+     * @example
+     * // Count the number of Cards
+     * const count = await prisma.card.count({
+     *   where: {
+     *     // ... the filter for the Cards we want to count
+     *   }
+     * })
+    **/
+    count<T extends CardCountArgs>(
+      args?: Subset<T, CardCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CardCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Card.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CardAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CardAggregateArgs>(args: Subset<T, CardAggregateArgs>): Prisma.PrismaPromise<GetCardAggregateType<T>>
+
+    /**
+     * Group by Card.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CardGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CardGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CardGroupByArgs['orderBy'] }
+        : { orderBy?: CardGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CardGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCardGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Card model
+   */
+  readonly fields: CardFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Card.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CardClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    owner<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    members<T extends Card$membersArgs<ExtArgs> = {}>(args?: Subset<T, Card$membersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CardMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Card model
+   */
+  interface CardFieldRefs {
+    readonly id: FieldRef<"Card", 'String'>
+    readonly title: FieldRef<"Card", 'String'>
+    readonly description: FieldRef<"Card", 'String'>
+    readonly status: FieldRef<"Card", 'CardStatus'>
+    readonly createdAt: FieldRef<"Card", 'DateTime'>
+    readonly ownerId: FieldRef<"Card", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Card findUnique
+   */
+  export type CardFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Card
+     */
+    select?: CardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Card
+     */
+    omit?: CardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CardInclude<ExtArgs> | null
+    /**
+     * Filter, which Card to fetch.
+     */
+    where: CardWhereUniqueInput
+  }
+
+  /**
+   * Card findUniqueOrThrow
+   */
+  export type CardFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Card
+     */
+    select?: CardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Card
+     */
+    omit?: CardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CardInclude<ExtArgs> | null
+    /**
+     * Filter, which Card to fetch.
+     */
+    where: CardWhereUniqueInput
+  }
+
+  /**
+   * Card findFirst
+   */
+  export type CardFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Card
+     */
+    select?: CardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Card
+     */
+    omit?: CardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CardInclude<ExtArgs> | null
+    /**
+     * Filter, which Card to fetch.
+     */
+    where?: CardWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cards to fetch.
+     */
+    orderBy?: CardOrderByWithRelationInput | CardOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Cards.
+     */
+    cursor?: CardWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cards from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cards.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Cards.
+     */
+    distinct?: CardScalarFieldEnum | CardScalarFieldEnum[]
+  }
+
+  /**
+   * Card findFirstOrThrow
+   */
+  export type CardFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Card
+     */
+    select?: CardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Card
+     */
+    omit?: CardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CardInclude<ExtArgs> | null
+    /**
+     * Filter, which Card to fetch.
+     */
+    where?: CardWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cards to fetch.
+     */
+    orderBy?: CardOrderByWithRelationInput | CardOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Cards.
+     */
+    cursor?: CardWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cards from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cards.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Cards.
+     */
+    distinct?: CardScalarFieldEnum | CardScalarFieldEnum[]
+  }
+
+  /**
+   * Card findMany
+   */
+  export type CardFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Card
+     */
+    select?: CardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Card
+     */
+    omit?: CardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CardInclude<ExtArgs> | null
+    /**
+     * Filter, which Cards to fetch.
+     */
+    where?: CardWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cards to fetch.
+     */
+    orderBy?: CardOrderByWithRelationInput | CardOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Cards.
+     */
+    cursor?: CardWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cards from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cards.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Cards.
+     */
+    distinct?: CardScalarFieldEnum | CardScalarFieldEnum[]
+  }
+
+  /**
+   * Card create
+   */
+  export type CardCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Card
+     */
+    select?: CardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Card
+     */
+    omit?: CardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CardInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Card.
+     */
+    data: XOR<CardCreateInput, CardUncheckedCreateInput>
+  }
+
+  /**
+   * Card createMany
+   */
+  export type CardCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Cards.
+     */
+    data: CardCreateManyInput | CardCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Card createManyAndReturn
+   */
+  export type CardCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Card
+     */
+    select?: CardSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Card
+     */
+    omit?: CardOmit<ExtArgs> | null
+    /**
+     * The data used to create many Cards.
+     */
+    data: CardCreateManyInput | CardCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CardIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Card update
+   */
+  export type CardUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Card
+     */
+    select?: CardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Card
+     */
+    omit?: CardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CardInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Card.
+     */
+    data: XOR<CardUpdateInput, CardUncheckedUpdateInput>
+    /**
+     * Choose, which Card to update.
+     */
+    where: CardWhereUniqueInput
+  }
+
+  /**
+   * Card updateMany
+   */
+  export type CardUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Cards.
+     */
+    data: XOR<CardUpdateManyMutationInput, CardUncheckedUpdateManyInput>
+    /**
+     * Filter which Cards to update
+     */
+    where?: CardWhereInput
+    /**
+     * Limit how many Cards to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Card updateManyAndReturn
+   */
+  export type CardUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Card
+     */
+    select?: CardSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Card
+     */
+    omit?: CardOmit<ExtArgs> | null
+    /**
+     * The data used to update Cards.
+     */
+    data: XOR<CardUpdateManyMutationInput, CardUncheckedUpdateManyInput>
+    /**
+     * Filter which Cards to update
+     */
+    where?: CardWhereInput
+    /**
+     * Limit how many Cards to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CardIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Card upsert
+   */
+  export type CardUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Card
+     */
+    select?: CardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Card
+     */
+    omit?: CardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CardInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Card to update in case it exists.
+     */
+    where: CardWhereUniqueInput
+    /**
+     * In case the Card found by the `where` argument doesn't exist, create a new Card with this data.
+     */
+    create: XOR<CardCreateInput, CardUncheckedCreateInput>
+    /**
+     * In case the Card was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CardUpdateInput, CardUncheckedUpdateInput>
+  }
+
+  /**
+   * Card delete
+   */
+  export type CardDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Card
+     */
+    select?: CardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Card
+     */
+    omit?: CardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CardInclude<ExtArgs> | null
+    /**
+     * Filter which Card to delete.
+     */
+    where: CardWhereUniqueInput
+  }
+
+  /**
+   * Card deleteMany
+   */
+  export type CardDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Cards to delete
+     */
+    where?: CardWhereInput
+    /**
+     * Limit how many Cards to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Card.members
+   */
+  export type Card$membersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CardMember
+     */
+    select?: CardMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CardMember
+     */
+    omit?: CardMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CardMemberInclude<ExtArgs> | null
+    where?: CardMemberWhereInput
+    orderBy?: CardMemberOrderByWithRelationInput | CardMemberOrderByWithRelationInput[]
+    cursor?: CardMemberWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CardMemberScalarFieldEnum | CardMemberScalarFieldEnum[]
+  }
+
+  /**
+   * Card without action
+   */
+  export type CardDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Card
+     */
+    select?: CardSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Card
+     */
+    omit?: CardOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CardInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CardMember
+   */
+
+  export type AggregateCardMember = {
+    _count: CardMemberCountAggregateOutputType | null
+    _min: CardMemberMinAggregateOutputType | null
+    _max: CardMemberMaxAggregateOutputType | null
+  }
+
+  export type CardMemberMinAggregateOutputType = {
+    id: string | null
+    cardId: string | null
+    userId: string | null
+    role: $Enums.CardRole | null
+  }
+
+  export type CardMemberMaxAggregateOutputType = {
+    id: string | null
+    cardId: string | null
+    userId: string | null
+    role: $Enums.CardRole | null
+  }
+
+  export type CardMemberCountAggregateOutputType = {
+    id: number
+    cardId: number
+    userId: number
+    role: number
+    _all: number
+  }
+
+
+  export type CardMemberMinAggregateInputType = {
+    id?: true
+    cardId?: true
+    userId?: true
+    role?: true
+  }
+
+  export type CardMemberMaxAggregateInputType = {
+    id?: true
+    cardId?: true
+    userId?: true
+    role?: true
+  }
+
+  export type CardMemberCountAggregateInputType = {
+    id?: true
+    cardId?: true
+    userId?: true
+    role?: true
+    _all?: true
+  }
+
+  export type CardMemberAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CardMember to aggregate.
+     */
+    where?: CardMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CardMembers to fetch.
+     */
+    orderBy?: CardMemberOrderByWithRelationInput | CardMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CardMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CardMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CardMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CardMembers
+    **/
+    _count?: true | CardMemberCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CardMemberMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CardMemberMaxAggregateInputType
+  }
+
+  export type GetCardMemberAggregateType<T extends CardMemberAggregateArgs> = {
+        [P in keyof T & keyof AggregateCardMember]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCardMember[P]>
+      : GetScalarType<T[P], AggregateCardMember[P]>
+  }
+
+
+
+
+  export type CardMemberGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CardMemberWhereInput
+    orderBy?: CardMemberOrderByWithAggregationInput | CardMemberOrderByWithAggregationInput[]
+    by: CardMemberScalarFieldEnum[] | CardMemberScalarFieldEnum
+    having?: CardMemberScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CardMemberCountAggregateInputType | true
+    _min?: CardMemberMinAggregateInputType
+    _max?: CardMemberMaxAggregateInputType
+  }
+
+  export type CardMemberGroupByOutputType = {
+    id: string
+    cardId: string
+    userId: string
+    role: $Enums.CardRole
+    _count: CardMemberCountAggregateOutputType | null
+    _min: CardMemberMinAggregateOutputType | null
+    _max: CardMemberMaxAggregateOutputType | null
+  }
+
+  type GetCardMemberGroupByPayload<T extends CardMemberGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CardMemberGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CardMemberGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CardMemberGroupByOutputType[P]>
+            : GetScalarType<T[P], CardMemberGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CardMemberSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cardId?: boolean
+    userId?: boolean
+    role?: boolean
+    card?: boolean | CardDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cardMember"]>
+
+  export type CardMemberSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cardId?: boolean
+    userId?: boolean
+    role?: boolean
+    card?: boolean | CardDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cardMember"]>
+
+  export type CardMemberSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    cardId?: boolean
+    userId?: boolean
+    role?: boolean
+    card?: boolean | CardDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cardMember"]>
+
+  export type CardMemberSelectScalar = {
+    id?: boolean
+    cardId?: boolean
+    userId?: boolean
+    role?: boolean
+  }
+
+  export type CardMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "cardId" | "userId" | "role", ExtArgs["result"]["cardMember"]>
+  export type CardMemberInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    card?: boolean | CardDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type CardMemberIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    card?: boolean | CardDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type CardMemberIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    card?: boolean | CardDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $CardMemberPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CardMember"
+    objects: {
+      card: Prisma.$CardPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      cardId: string
+      userId: string
+      role: $Enums.CardRole
+    }, ExtArgs["result"]["cardMember"]>
+    composites: {}
+  }
+
+  type CardMemberGetPayload<S extends boolean | null | undefined | CardMemberDefaultArgs> = $Result.GetResult<Prisma.$CardMemberPayload, S>
+
+  type CardMemberCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CardMemberFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CardMemberCountAggregateInputType | true
+    }
+
+  export interface CardMemberDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CardMember'], meta: { name: 'CardMember' } }
+    /**
+     * Find zero or one CardMember that matches the filter.
+     * @param {CardMemberFindUniqueArgs} args - Arguments to find a CardMember
+     * @example
+     * // Get one CardMember
+     * const cardMember = await prisma.cardMember.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CardMemberFindUniqueArgs>(args: SelectSubset<T, CardMemberFindUniqueArgs<ExtArgs>>): Prisma__CardMemberClient<$Result.GetResult<Prisma.$CardMemberPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CardMember that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CardMemberFindUniqueOrThrowArgs} args - Arguments to find a CardMember
+     * @example
+     * // Get one CardMember
+     * const cardMember = await prisma.cardMember.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CardMemberFindUniqueOrThrowArgs>(args: SelectSubset<T, CardMemberFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CardMemberClient<$Result.GetResult<Prisma.$CardMemberPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CardMember that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CardMemberFindFirstArgs} args - Arguments to find a CardMember
+     * @example
+     * // Get one CardMember
+     * const cardMember = await prisma.cardMember.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CardMemberFindFirstArgs>(args?: SelectSubset<T, CardMemberFindFirstArgs<ExtArgs>>): Prisma__CardMemberClient<$Result.GetResult<Prisma.$CardMemberPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CardMember that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CardMemberFindFirstOrThrowArgs} args - Arguments to find a CardMember
+     * @example
+     * // Get one CardMember
+     * const cardMember = await prisma.cardMember.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CardMemberFindFirstOrThrowArgs>(args?: SelectSubset<T, CardMemberFindFirstOrThrowArgs<ExtArgs>>): Prisma__CardMemberClient<$Result.GetResult<Prisma.$CardMemberPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CardMembers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CardMemberFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CardMembers
+     * const cardMembers = await prisma.cardMember.findMany()
+     * 
+     * // Get first 10 CardMembers
+     * const cardMembers = await prisma.cardMember.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const cardMemberWithIdOnly = await prisma.cardMember.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CardMemberFindManyArgs>(args?: SelectSubset<T, CardMemberFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CardMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CardMember.
+     * @param {CardMemberCreateArgs} args - Arguments to create a CardMember.
+     * @example
+     * // Create one CardMember
+     * const CardMember = await prisma.cardMember.create({
+     *   data: {
+     *     // ... data to create a CardMember
+     *   }
+     * })
+     * 
+     */
+    create<T extends CardMemberCreateArgs>(args: SelectSubset<T, CardMemberCreateArgs<ExtArgs>>): Prisma__CardMemberClient<$Result.GetResult<Prisma.$CardMemberPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CardMembers.
+     * @param {CardMemberCreateManyArgs} args - Arguments to create many CardMembers.
+     * @example
+     * // Create many CardMembers
+     * const cardMember = await prisma.cardMember.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CardMemberCreateManyArgs>(args?: SelectSubset<T, CardMemberCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CardMembers and returns the data saved in the database.
+     * @param {CardMemberCreateManyAndReturnArgs} args - Arguments to create many CardMembers.
+     * @example
+     * // Create many CardMembers
+     * const cardMember = await prisma.cardMember.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CardMembers and only return the `id`
+     * const cardMemberWithIdOnly = await prisma.cardMember.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CardMemberCreateManyAndReturnArgs>(args?: SelectSubset<T, CardMemberCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CardMemberPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CardMember.
+     * @param {CardMemberDeleteArgs} args - Arguments to delete one CardMember.
+     * @example
+     * // Delete one CardMember
+     * const CardMember = await prisma.cardMember.delete({
+     *   where: {
+     *     // ... filter to delete one CardMember
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CardMemberDeleteArgs>(args: SelectSubset<T, CardMemberDeleteArgs<ExtArgs>>): Prisma__CardMemberClient<$Result.GetResult<Prisma.$CardMemberPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CardMember.
+     * @param {CardMemberUpdateArgs} args - Arguments to update one CardMember.
+     * @example
+     * // Update one CardMember
+     * const cardMember = await prisma.cardMember.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CardMemberUpdateArgs>(args: SelectSubset<T, CardMemberUpdateArgs<ExtArgs>>): Prisma__CardMemberClient<$Result.GetResult<Prisma.$CardMemberPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CardMembers.
+     * @param {CardMemberDeleteManyArgs} args - Arguments to filter CardMembers to delete.
+     * @example
+     * // Delete a few CardMembers
+     * const { count } = await prisma.cardMember.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CardMemberDeleteManyArgs>(args?: SelectSubset<T, CardMemberDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CardMembers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CardMemberUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CardMembers
+     * const cardMember = await prisma.cardMember.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CardMemberUpdateManyArgs>(args: SelectSubset<T, CardMemberUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CardMembers and returns the data updated in the database.
+     * @param {CardMemberUpdateManyAndReturnArgs} args - Arguments to update many CardMembers.
+     * @example
+     * // Update many CardMembers
+     * const cardMember = await prisma.cardMember.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CardMembers and only return the `id`
+     * const cardMemberWithIdOnly = await prisma.cardMember.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CardMemberUpdateManyAndReturnArgs>(args: SelectSubset<T, CardMemberUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CardMemberPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CardMember.
+     * @param {CardMemberUpsertArgs} args - Arguments to update or create a CardMember.
+     * @example
+     * // Update or create a CardMember
+     * const cardMember = await prisma.cardMember.upsert({
+     *   create: {
+     *     // ... data to create a CardMember
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CardMember we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CardMemberUpsertArgs>(args: SelectSubset<T, CardMemberUpsertArgs<ExtArgs>>): Prisma__CardMemberClient<$Result.GetResult<Prisma.$CardMemberPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CardMembers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CardMemberCountArgs} args - Arguments to filter CardMembers to count.
+     * @example
+     * // Count the number of CardMembers
+     * const count = await prisma.cardMember.count({
+     *   where: {
+     *     // ... the filter for the CardMembers we want to count
+     *   }
+     * })
+    **/
+    count<T extends CardMemberCountArgs>(
+      args?: Subset<T, CardMemberCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CardMemberCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CardMember.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CardMemberAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CardMemberAggregateArgs>(args: Subset<T, CardMemberAggregateArgs>): Prisma.PrismaPromise<GetCardMemberAggregateType<T>>
+
+    /**
+     * Group by CardMember.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CardMemberGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CardMemberGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CardMemberGroupByArgs['orderBy'] }
+        : { orderBy?: CardMemberGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CardMemberGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCardMemberGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CardMember model
+   */
+  readonly fields: CardMemberFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CardMember.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CardMemberClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    card<T extends CardDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CardDefaultArgs<ExtArgs>>): Prisma__CardClient<$Result.GetResult<Prisma.$CardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CardMember model
+   */
+  interface CardMemberFieldRefs {
+    readonly id: FieldRef<"CardMember", 'String'>
+    readonly cardId: FieldRef<"CardMember", 'String'>
+    readonly userId: FieldRef<"CardMember", 'String'>
+    readonly role: FieldRef<"CardMember", 'CardRole'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CardMember findUnique
+   */
+  export type CardMemberFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CardMember
+     */
+    select?: CardMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CardMember
+     */
+    omit?: CardMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CardMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which CardMember to fetch.
+     */
+    where: CardMemberWhereUniqueInput
+  }
+
+  /**
+   * CardMember findUniqueOrThrow
+   */
+  export type CardMemberFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CardMember
+     */
+    select?: CardMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CardMember
+     */
+    omit?: CardMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CardMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which CardMember to fetch.
+     */
+    where: CardMemberWhereUniqueInput
+  }
+
+  /**
+   * CardMember findFirst
+   */
+  export type CardMemberFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CardMember
+     */
+    select?: CardMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CardMember
+     */
+    omit?: CardMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CardMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which CardMember to fetch.
+     */
+    where?: CardMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CardMembers to fetch.
+     */
+    orderBy?: CardMemberOrderByWithRelationInput | CardMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CardMembers.
+     */
+    cursor?: CardMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CardMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CardMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CardMembers.
+     */
+    distinct?: CardMemberScalarFieldEnum | CardMemberScalarFieldEnum[]
+  }
+
+  /**
+   * CardMember findFirstOrThrow
+   */
+  export type CardMemberFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CardMember
+     */
+    select?: CardMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CardMember
+     */
+    omit?: CardMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CardMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which CardMember to fetch.
+     */
+    where?: CardMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CardMembers to fetch.
+     */
+    orderBy?: CardMemberOrderByWithRelationInput | CardMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CardMembers.
+     */
+    cursor?: CardMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CardMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CardMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CardMembers.
+     */
+    distinct?: CardMemberScalarFieldEnum | CardMemberScalarFieldEnum[]
+  }
+
+  /**
+   * CardMember findMany
+   */
+  export type CardMemberFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CardMember
+     */
+    select?: CardMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CardMember
+     */
+    omit?: CardMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CardMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which CardMembers to fetch.
+     */
+    where?: CardMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CardMembers to fetch.
+     */
+    orderBy?: CardMemberOrderByWithRelationInput | CardMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CardMembers.
+     */
+    cursor?: CardMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CardMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CardMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CardMembers.
+     */
+    distinct?: CardMemberScalarFieldEnum | CardMemberScalarFieldEnum[]
+  }
+
+  /**
+   * CardMember create
+   */
+  export type CardMemberCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CardMember
+     */
+    select?: CardMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CardMember
+     */
+    omit?: CardMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CardMemberInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CardMember.
+     */
+    data: XOR<CardMemberCreateInput, CardMemberUncheckedCreateInput>
+  }
+
+  /**
+   * CardMember createMany
+   */
+  export type CardMemberCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CardMembers.
+     */
+    data: CardMemberCreateManyInput | CardMemberCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CardMember createManyAndReturn
+   */
+  export type CardMemberCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CardMember
+     */
+    select?: CardMemberSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CardMember
+     */
+    omit?: CardMemberOmit<ExtArgs> | null
+    /**
+     * The data used to create many CardMembers.
+     */
+    data: CardMemberCreateManyInput | CardMemberCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CardMemberIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CardMember update
+   */
+  export type CardMemberUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CardMember
+     */
+    select?: CardMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CardMember
+     */
+    omit?: CardMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CardMemberInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CardMember.
+     */
+    data: XOR<CardMemberUpdateInput, CardMemberUncheckedUpdateInput>
+    /**
+     * Choose, which CardMember to update.
+     */
+    where: CardMemberWhereUniqueInput
+  }
+
+  /**
+   * CardMember updateMany
+   */
+  export type CardMemberUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CardMembers.
+     */
+    data: XOR<CardMemberUpdateManyMutationInput, CardMemberUncheckedUpdateManyInput>
+    /**
+     * Filter which CardMembers to update
+     */
+    where?: CardMemberWhereInput
+    /**
+     * Limit how many CardMembers to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CardMember updateManyAndReturn
+   */
+  export type CardMemberUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CardMember
+     */
+    select?: CardMemberSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CardMember
+     */
+    omit?: CardMemberOmit<ExtArgs> | null
+    /**
+     * The data used to update CardMembers.
+     */
+    data: XOR<CardMemberUpdateManyMutationInput, CardMemberUncheckedUpdateManyInput>
+    /**
+     * Filter which CardMembers to update
+     */
+    where?: CardMemberWhereInput
+    /**
+     * Limit how many CardMembers to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CardMemberIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CardMember upsert
+   */
+  export type CardMemberUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CardMember
+     */
+    select?: CardMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CardMember
+     */
+    omit?: CardMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CardMemberInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CardMember to update in case it exists.
+     */
+    where: CardMemberWhereUniqueInput
+    /**
+     * In case the CardMember found by the `where` argument doesn't exist, create a new CardMember with this data.
+     */
+    create: XOR<CardMemberCreateInput, CardMemberUncheckedCreateInput>
+    /**
+     * In case the CardMember was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CardMemberUpdateInput, CardMemberUncheckedUpdateInput>
+  }
+
+  /**
+   * CardMember delete
+   */
+  export type CardMemberDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CardMember
+     */
+    select?: CardMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CardMember
+     */
+    omit?: CardMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CardMemberInclude<ExtArgs> | null
+    /**
+     * Filter which CardMember to delete.
+     */
+    where: CardMemberWhereUniqueInput
+  }
+
+  /**
+   * CardMember deleteMany
+   */
+  export type CardMemberDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CardMembers to delete
+     */
+    where?: CardMemberWhereInput
+    /**
+     * Limit how many CardMembers to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CardMember without action
+   */
+  export type CardMemberDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CardMember
+     */
+    select?: CardMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CardMember
+     */
+    omit?: CardMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CardMemberInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -4507,6 +6987,28 @@ export namespace Prisma {
   };
 
   export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
+
+
+  export const CardScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    description: 'description',
+    status: 'status',
+    createdAt: 'createdAt',
+    ownerId: 'ownerId'
+  };
+
+  export type CardScalarFieldEnum = (typeof CardScalarFieldEnum)[keyof typeof CardScalarFieldEnum]
+
+
+  export const CardMemberScalarFieldEnum: {
+    id: 'id',
+    cardId: 'cardId',
+    userId: 'userId',
+    role: 'role'
+  };
+
+  export type CardMemberScalarFieldEnum = (typeof CardMemberScalarFieldEnum)[keyof typeof CardMemberScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -4581,6 +7083,34 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'CardStatus'
+   */
+  export type EnumCardStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CardStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'CardStatus[]'
+   */
+  export type ListEnumCardStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CardStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'CardRole'
+   */
+  export type EnumCardRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CardRole'>
+    
+
+
+  /**
+   * Reference to a field of type 'CardRole[]'
+   */
+  export type ListEnumCardRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CardRole[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -4610,6 +7140,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     accounts?: AccountListRelationFilter
     sessions?: SessionListRelationFilter
+    ownedCards?: CardListRelationFilter
+    cardMemberships?: CardMemberListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -4622,6 +7154,8 @@ export namespace Prisma {
     createdAt?: SortOrder
     accounts?: AccountOrderByRelationAggregateInput
     sessions?: SessionOrderByRelationAggregateInput
+    ownedCards?: CardOrderByRelationAggregateInput
+    cardMemberships?: CardMemberOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -4637,6 +7171,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     accounts?: AccountListRelationFilter
     sessions?: SessionListRelationFilter
+    ownedCards?: CardListRelationFilter
+    cardMemberships?: CardMemberListRelationFilter
   }, "id" | "username" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -4808,6 +7344,123 @@ export namespace Prisma {
     expires?: DateTimeWithAggregatesFilter<"Session"> | Date | string
   }
 
+  export type CardWhereInput = {
+    AND?: CardWhereInput | CardWhereInput[]
+    OR?: CardWhereInput[]
+    NOT?: CardWhereInput | CardWhereInput[]
+    id?: StringFilter<"Card"> | string
+    title?: StringFilter<"Card"> | string
+    description?: StringNullableFilter<"Card"> | string | null
+    status?: EnumCardStatusFilter<"Card"> | $Enums.CardStatus
+    createdAt?: DateTimeFilter<"Card"> | Date | string
+    ownerId?: StringFilter<"Card"> | string
+    owner?: XOR<UserScalarRelationFilter, UserWhereInput>
+    members?: CardMemberListRelationFilter
+  }
+
+  export type CardOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    ownerId?: SortOrder
+    owner?: UserOrderByWithRelationInput
+    members?: CardMemberOrderByRelationAggregateInput
+  }
+
+  export type CardWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: CardWhereInput | CardWhereInput[]
+    OR?: CardWhereInput[]
+    NOT?: CardWhereInput | CardWhereInput[]
+    title?: StringFilter<"Card"> | string
+    description?: StringNullableFilter<"Card"> | string | null
+    status?: EnumCardStatusFilter<"Card"> | $Enums.CardStatus
+    createdAt?: DateTimeFilter<"Card"> | Date | string
+    ownerId?: StringFilter<"Card"> | string
+    owner?: XOR<UserScalarRelationFilter, UserWhereInput>
+    members?: CardMemberListRelationFilter
+  }, "id">
+
+  export type CardOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    ownerId?: SortOrder
+    _count?: CardCountOrderByAggregateInput
+    _max?: CardMaxOrderByAggregateInput
+    _min?: CardMinOrderByAggregateInput
+  }
+
+  export type CardScalarWhereWithAggregatesInput = {
+    AND?: CardScalarWhereWithAggregatesInput | CardScalarWhereWithAggregatesInput[]
+    OR?: CardScalarWhereWithAggregatesInput[]
+    NOT?: CardScalarWhereWithAggregatesInput | CardScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Card"> | string
+    title?: StringWithAggregatesFilter<"Card"> | string
+    description?: StringNullableWithAggregatesFilter<"Card"> | string | null
+    status?: EnumCardStatusWithAggregatesFilter<"Card"> | $Enums.CardStatus
+    createdAt?: DateTimeWithAggregatesFilter<"Card"> | Date | string
+    ownerId?: StringWithAggregatesFilter<"Card"> | string
+  }
+
+  export type CardMemberWhereInput = {
+    AND?: CardMemberWhereInput | CardMemberWhereInput[]
+    OR?: CardMemberWhereInput[]
+    NOT?: CardMemberWhereInput | CardMemberWhereInput[]
+    id?: StringFilter<"CardMember"> | string
+    cardId?: StringFilter<"CardMember"> | string
+    userId?: StringFilter<"CardMember"> | string
+    role?: EnumCardRoleFilter<"CardMember"> | $Enums.CardRole
+    card?: XOR<CardScalarRelationFilter, CardWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type CardMemberOrderByWithRelationInput = {
+    id?: SortOrder
+    cardId?: SortOrder
+    userId?: SortOrder
+    role?: SortOrder
+    card?: CardOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type CardMemberWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    cardId_userId?: CardMemberCardIdUserIdCompoundUniqueInput
+    AND?: CardMemberWhereInput | CardMemberWhereInput[]
+    OR?: CardMemberWhereInput[]
+    NOT?: CardMemberWhereInput | CardMemberWhereInput[]
+    cardId?: StringFilter<"CardMember"> | string
+    userId?: StringFilter<"CardMember"> | string
+    role?: EnumCardRoleFilter<"CardMember"> | $Enums.CardRole
+    card?: XOR<CardScalarRelationFilter, CardWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "cardId_userId">
+
+  export type CardMemberOrderByWithAggregationInput = {
+    id?: SortOrder
+    cardId?: SortOrder
+    userId?: SortOrder
+    role?: SortOrder
+    _count?: CardMemberCountOrderByAggregateInput
+    _max?: CardMemberMaxOrderByAggregateInput
+    _min?: CardMemberMinOrderByAggregateInput
+  }
+
+  export type CardMemberScalarWhereWithAggregatesInput = {
+    AND?: CardMemberScalarWhereWithAggregatesInput | CardMemberScalarWhereWithAggregatesInput[]
+    OR?: CardMemberScalarWhereWithAggregatesInput[]
+    NOT?: CardMemberScalarWhereWithAggregatesInput | CardMemberScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CardMember"> | string
+    cardId?: StringWithAggregatesFilter<"CardMember"> | string
+    userId?: StringWithAggregatesFilter<"CardMember"> | string
+    role?: EnumCardRoleWithAggregatesFilter<"CardMember"> | $Enums.CardRole
+  }
+
   export type UserCreateInput = {
     id?: string
     firstName: string
@@ -4818,6 +7471,8 @@ export namespace Prisma {
     createdAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
+    ownedCards?: CardCreateNestedManyWithoutOwnerInput
+    cardMemberships?: CardMemberCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -4830,6 +7485,8 @@ export namespace Prisma {
     createdAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    ownedCards?: CardUncheckedCreateNestedManyWithoutOwnerInput
+    cardMemberships?: CardMemberUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -4842,6 +7499,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
+    ownedCards?: CardUpdateManyWithoutOwnerNestedInput
+    cardMemberships?: CardMemberUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -4854,6 +7513,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    ownedCards?: CardUncheckedUpdateManyWithoutOwnerNestedInput
+    cardMemberships?: CardMemberUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -5038,6 +7699,119 @@ export namespace Prisma {
     expires?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type CardCreateInput = {
+    id?: string
+    title: string
+    description?: string | null
+    status?: $Enums.CardStatus
+    createdAt?: Date | string
+    owner: UserCreateNestedOneWithoutOwnedCardsInput
+    members?: CardMemberCreateNestedManyWithoutCardInput
+  }
+
+  export type CardUncheckedCreateInput = {
+    id?: string
+    title: string
+    description?: string | null
+    status?: $Enums.CardStatus
+    createdAt?: Date | string
+    ownerId: string
+    members?: CardMemberUncheckedCreateNestedManyWithoutCardInput
+  }
+
+  export type CardUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumCardStatusFieldUpdateOperationsInput | $Enums.CardStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: UserUpdateOneRequiredWithoutOwnedCardsNestedInput
+    members?: CardMemberUpdateManyWithoutCardNestedInput
+  }
+
+  export type CardUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumCardStatusFieldUpdateOperationsInput | $Enums.CardStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+    members?: CardMemberUncheckedUpdateManyWithoutCardNestedInput
+  }
+
+  export type CardCreateManyInput = {
+    id?: string
+    title: string
+    description?: string | null
+    status?: $Enums.CardStatus
+    createdAt?: Date | string
+    ownerId: string
+  }
+
+  export type CardUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumCardStatusFieldUpdateOperationsInput | $Enums.CardStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CardUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumCardStatusFieldUpdateOperationsInput | $Enums.CardStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type CardMemberCreateInput = {
+    id?: string
+    role?: $Enums.CardRole
+    card: CardCreateNestedOneWithoutMembersInput
+    user: UserCreateNestedOneWithoutCardMembershipsInput
+  }
+
+  export type CardMemberUncheckedCreateInput = {
+    id?: string
+    cardId: string
+    userId: string
+    role?: $Enums.CardRole
+  }
+
+  export type CardMemberUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: EnumCardRoleFieldUpdateOperationsInput | $Enums.CardRole
+    card?: CardUpdateOneRequiredWithoutMembersNestedInput
+    user?: UserUpdateOneRequiredWithoutCardMembershipsNestedInput
+  }
+
+  export type CardMemberUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cardId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    role?: EnumCardRoleFieldUpdateOperationsInput | $Enums.CardRole
+  }
+
+  export type CardMemberCreateManyInput = {
+    id?: string
+    cardId: string
+    userId: string
+    role?: $Enums.CardRole
+  }
+
+  export type CardMemberUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: EnumCardRoleFieldUpdateOperationsInput | $Enums.CardRole
+  }
+
+  export type CardMemberUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cardId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    role?: EnumCardRoleFieldUpdateOperationsInput | $Enums.CardRole
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -5091,6 +7865,18 @@ export namespace Prisma {
     none?: SessionWhereInput
   }
 
+  export type CardListRelationFilter = {
+    every?: CardWhereInput
+    some?: CardWhereInput
+    none?: CardWhereInput
+  }
+
+  export type CardMemberListRelationFilter = {
+    every?: CardMemberWhereInput
+    some?: CardMemberWhereInput
+    none?: CardMemberWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -5101,6 +7887,14 @@ export namespace Prisma {
   }
 
   export type SessionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CardOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CardMemberOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -5295,6 +8089,98 @@ export namespace Prisma {
     expires?: SortOrder
   }
 
+  export type EnumCardStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.CardStatus | EnumCardStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.CardStatus[] | ListEnumCardStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CardStatus[] | ListEnumCardStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumCardStatusFilter<$PrismaModel> | $Enums.CardStatus
+  }
+
+  export type CardCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    ownerId?: SortOrder
+  }
+
+  export type CardMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    ownerId?: SortOrder
+  }
+
+  export type CardMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    ownerId?: SortOrder
+  }
+
+  export type EnumCardStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CardStatus | EnumCardStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.CardStatus[] | ListEnumCardStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CardStatus[] | ListEnumCardStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumCardStatusWithAggregatesFilter<$PrismaModel> | $Enums.CardStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumCardStatusFilter<$PrismaModel>
+    _max?: NestedEnumCardStatusFilter<$PrismaModel>
+  }
+
+  export type EnumCardRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.CardRole | EnumCardRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.CardRole[] | ListEnumCardRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CardRole[] | ListEnumCardRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumCardRoleFilter<$PrismaModel> | $Enums.CardRole
+  }
+
+  export type CardScalarRelationFilter = {
+    is?: CardWhereInput
+    isNot?: CardWhereInput
+  }
+
+  export type CardMemberCardIdUserIdCompoundUniqueInput = {
+    cardId: string
+    userId: string
+  }
+
+  export type CardMemberCountOrderByAggregateInput = {
+    id?: SortOrder
+    cardId?: SortOrder
+    userId?: SortOrder
+    role?: SortOrder
+  }
+
+  export type CardMemberMaxOrderByAggregateInput = {
+    id?: SortOrder
+    cardId?: SortOrder
+    userId?: SortOrder
+    role?: SortOrder
+  }
+
+  export type CardMemberMinOrderByAggregateInput = {
+    id?: SortOrder
+    cardId?: SortOrder
+    userId?: SortOrder
+    role?: SortOrder
+  }
+
+  export type EnumCardRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CardRole | EnumCardRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.CardRole[] | ListEnumCardRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CardRole[] | ListEnumCardRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumCardRoleWithAggregatesFilter<$PrismaModel> | $Enums.CardRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumCardRoleFilter<$PrismaModel>
+    _max?: NestedEnumCardRoleFilter<$PrismaModel>
+  }
+
   export type AccountCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -5309,6 +8195,20 @@ export namespace Prisma {
     connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
   }
 
+  export type CardCreateNestedManyWithoutOwnerInput = {
+    create?: XOR<CardCreateWithoutOwnerInput, CardUncheckedCreateWithoutOwnerInput> | CardCreateWithoutOwnerInput[] | CardUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: CardCreateOrConnectWithoutOwnerInput | CardCreateOrConnectWithoutOwnerInput[]
+    createMany?: CardCreateManyOwnerInputEnvelope
+    connect?: CardWhereUniqueInput | CardWhereUniqueInput[]
+  }
+
+  export type CardMemberCreateNestedManyWithoutUserInput = {
+    create?: XOR<CardMemberCreateWithoutUserInput, CardMemberUncheckedCreateWithoutUserInput> | CardMemberCreateWithoutUserInput[] | CardMemberUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CardMemberCreateOrConnectWithoutUserInput | CardMemberCreateOrConnectWithoutUserInput[]
+    createMany?: CardMemberCreateManyUserInputEnvelope
+    connect?: CardMemberWhereUniqueInput | CardMemberWhereUniqueInput[]
+  }
+
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -5321,6 +8221,20 @@ export namespace Prisma {
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
     createMany?: SessionCreateManyUserInputEnvelope
     connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+  }
+
+  export type CardUncheckedCreateNestedManyWithoutOwnerInput = {
+    create?: XOR<CardCreateWithoutOwnerInput, CardUncheckedCreateWithoutOwnerInput> | CardCreateWithoutOwnerInput[] | CardUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: CardCreateOrConnectWithoutOwnerInput | CardCreateOrConnectWithoutOwnerInput[]
+    createMany?: CardCreateManyOwnerInputEnvelope
+    connect?: CardWhereUniqueInput | CardWhereUniqueInput[]
+  }
+
+  export type CardMemberUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<CardMemberCreateWithoutUserInput, CardMemberUncheckedCreateWithoutUserInput> | CardMemberCreateWithoutUserInput[] | CardMemberUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CardMemberCreateOrConnectWithoutUserInput | CardMemberCreateOrConnectWithoutUserInput[]
+    createMany?: CardMemberCreateManyUserInputEnvelope
+    connect?: CardMemberWhereUniqueInput | CardMemberWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -5363,6 +8277,34 @@ export namespace Prisma {
     deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
   }
 
+  export type CardUpdateManyWithoutOwnerNestedInput = {
+    create?: XOR<CardCreateWithoutOwnerInput, CardUncheckedCreateWithoutOwnerInput> | CardCreateWithoutOwnerInput[] | CardUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: CardCreateOrConnectWithoutOwnerInput | CardCreateOrConnectWithoutOwnerInput[]
+    upsert?: CardUpsertWithWhereUniqueWithoutOwnerInput | CardUpsertWithWhereUniqueWithoutOwnerInput[]
+    createMany?: CardCreateManyOwnerInputEnvelope
+    set?: CardWhereUniqueInput | CardWhereUniqueInput[]
+    disconnect?: CardWhereUniqueInput | CardWhereUniqueInput[]
+    delete?: CardWhereUniqueInput | CardWhereUniqueInput[]
+    connect?: CardWhereUniqueInput | CardWhereUniqueInput[]
+    update?: CardUpdateWithWhereUniqueWithoutOwnerInput | CardUpdateWithWhereUniqueWithoutOwnerInput[]
+    updateMany?: CardUpdateManyWithWhereWithoutOwnerInput | CardUpdateManyWithWhereWithoutOwnerInput[]
+    deleteMany?: CardScalarWhereInput | CardScalarWhereInput[]
+  }
+
+  export type CardMemberUpdateManyWithoutUserNestedInput = {
+    create?: XOR<CardMemberCreateWithoutUserInput, CardMemberUncheckedCreateWithoutUserInput> | CardMemberCreateWithoutUserInput[] | CardMemberUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CardMemberCreateOrConnectWithoutUserInput | CardMemberCreateOrConnectWithoutUserInput[]
+    upsert?: CardMemberUpsertWithWhereUniqueWithoutUserInput | CardMemberUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: CardMemberCreateManyUserInputEnvelope
+    set?: CardMemberWhereUniqueInput | CardMemberWhereUniqueInput[]
+    disconnect?: CardMemberWhereUniqueInput | CardMemberWhereUniqueInput[]
+    delete?: CardMemberWhereUniqueInput | CardMemberWhereUniqueInput[]
+    connect?: CardMemberWhereUniqueInput | CardMemberWhereUniqueInput[]
+    update?: CardMemberUpdateWithWhereUniqueWithoutUserInput | CardMemberUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: CardMemberUpdateManyWithWhereWithoutUserInput | CardMemberUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: CardMemberScalarWhereInput | CardMemberScalarWhereInput[]
+  }
+
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -5389,6 +8331,34 @@ export namespace Prisma {
     update?: SessionUpdateWithWhereUniqueWithoutUserInput | SessionUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: SessionUpdateManyWithWhereWithoutUserInput | SessionUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
+  }
+
+  export type CardUncheckedUpdateManyWithoutOwnerNestedInput = {
+    create?: XOR<CardCreateWithoutOwnerInput, CardUncheckedCreateWithoutOwnerInput> | CardCreateWithoutOwnerInput[] | CardUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: CardCreateOrConnectWithoutOwnerInput | CardCreateOrConnectWithoutOwnerInput[]
+    upsert?: CardUpsertWithWhereUniqueWithoutOwnerInput | CardUpsertWithWhereUniqueWithoutOwnerInput[]
+    createMany?: CardCreateManyOwnerInputEnvelope
+    set?: CardWhereUniqueInput | CardWhereUniqueInput[]
+    disconnect?: CardWhereUniqueInput | CardWhereUniqueInput[]
+    delete?: CardWhereUniqueInput | CardWhereUniqueInput[]
+    connect?: CardWhereUniqueInput | CardWhereUniqueInput[]
+    update?: CardUpdateWithWhereUniqueWithoutOwnerInput | CardUpdateWithWhereUniqueWithoutOwnerInput[]
+    updateMany?: CardUpdateManyWithWhereWithoutOwnerInput | CardUpdateManyWithWhereWithoutOwnerInput[]
+    deleteMany?: CardScalarWhereInput | CardScalarWhereInput[]
+  }
+
+  export type CardMemberUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<CardMemberCreateWithoutUserInput, CardMemberUncheckedCreateWithoutUserInput> | CardMemberCreateWithoutUserInput[] | CardMemberUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CardMemberCreateOrConnectWithoutUserInput | CardMemberCreateOrConnectWithoutUserInput[]
+    upsert?: CardMemberUpsertWithWhereUniqueWithoutUserInput | CardMemberUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: CardMemberCreateManyUserInputEnvelope
+    set?: CardMemberWhereUniqueInput | CardMemberWhereUniqueInput[]
+    disconnect?: CardMemberWhereUniqueInput | CardMemberWhereUniqueInput[]
+    delete?: CardMemberWhereUniqueInput | CardMemberWhereUniqueInput[]
+    connect?: CardMemberWhereUniqueInput | CardMemberWhereUniqueInput[]
+    update?: CardMemberUpdateWithWhereUniqueWithoutUserInput | CardMemberUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: CardMemberUpdateManyWithWhereWithoutUserInput | CardMemberUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: CardMemberScalarWhereInput | CardMemberScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutAccountsInput = {
@@ -5425,6 +8395,98 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutSessionsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSessionsInput, UserUpdateWithoutSessionsInput>, UserUncheckedUpdateWithoutSessionsInput>
+  }
+
+  export type UserCreateNestedOneWithoutOwnedCardsInput = {
+    create?: XOR<UserCreateWithoutOwnedCardsInput, UserUncheckedCreateWithoutOwnedCardsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutOwnedCardsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type CardMemberCreateNestedManyWithoutCardInput = {
+    create?: XOR<CardMemberCreateWithoutCardInput, CardMemberUncheckedCreateWithoutCardInput> | CardMemberCreateWithoutCardInput[] | CardMemberUncheckedCreateWithoutCardInput[]
+    connectOrCreate?: CardMemberCreateOrConnectWithoutCardInput | CardMemberCreateOrConnectWithoutCardInput[]
+    createMany?: CardMemberCreateManyCardInputEnvelope
+    connect?: CardMemberWhereUniqueInput | CardMemberWhereUniqueInput[]
+  }
+
+  export type CardMemberUncheckedCreateNestedManyWithoutCardInput = {
+    create?: XOR<CardMemberCreateWithoutCardInput, CardMemberUncheckedCreateWithoutCardInput> | CardMemberCreateWithoutCardInput[] | CardMemberUncheckedCreateWithoutCardInput[]
+    connectOrCreate?: CardMemberCreateOrConnectWithoutCardInput | CardMemberCreateOrConnectWithoutCardInput[]
+    createMany?: CardMemberCreateManyCardInputEnvelope
+    connect?: CardMemberWhereUniqueInput | CardMemberWhereUniqueInput[]
+  }
+
+  export type EnumCardStatusFieldUpdateOperationsInput = {
+    set?: $Enums.CardStatus
+  }
+
+  export type UserUpdateOneRequiredWithoutOwnedCardsNestedInput = {
+    create?: XOR<UserCreateWithoutOwnedCardsInput, UserUncheckedCreateWithoutOwnedCardsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutOwnedCardsInput
+    upsert?: UserUpsertWithoutOwnedCardsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutOwnedCardsInput, UserUpdateWithoutOwnedCardsInput>, UserUncheckedUpdateWithoutOwnedCardsInput>
+  }
+
+  export type CardMemberUpdateManyWithoutCardNestedInput = {
+    create?: XOR<CardMemberCreateWithoutCardInput, CardMemberUncheckedCreateWithoutCardInput> | CardMemberCreateWithoutCardInput[] | CardMemberUncheckedCreateWithoutCardInput[]
+    connectOrCreate?: CardMemberCreateOrConnectWithoutCardInput | CardMemberCreateOrConnectWithoutCardInput[]
+    upsert?: CardMemberUpsertWithWhereUniqueWithoutCardInput | CardMemberUpsertWithWhereUniqueWithoutCardInput[]
+    createMany?: CardMemberCreateManyCardInputEnvelope
+    set?: CardMemberWhereUniqueInput | CardMemberWhereUniqueInput[]
+    disconnect?: CardMemberWhereUniqueInput | CardMemberWhereUniqueInput[]
+    delete?: CardMemberWhereUniqueInput | CardMemberWhereUniqueInput[]
+    connect?: CardMemberWhereUniqueInput | CardMemberWhereUniqueInput[]
+    update?: CardMemberUpdateWithWhereUniqueWithoutCardInput | CardMemberUpdateWithWhereUniqueWithoutCardInput[]
+    updateMany?: CardMemberUpdateManyWithWhereWithoutCardInput | CardMemberUpdateManyWithWhereWithoutCardInput[]
+    deleteMany?: CardMemberScalarWhereInput | CardMemberScalarWhereInput[]
+  }
+
+  export type CardMemberUncheckedUpdateManyWithoutCardNestedInput = {
+    create?: XOR<CardMemberCreateWithoutCardInput, CardMemberUncheckedCreateWithoutCardInput> | CardMemberCreateWithoutCardInput[] | CardMemberUncheckedCreateWithoutCardInput[]
+    connectOrCreate?: CardMemberCreateOrConnectWithoutCardInput | CardMemberCreateOrConnectWithoutCardInput[]
+    upsert?: CardMemberUpsertWithWhereUniqueWithoutCardInput | CardMemberUpsertWithWhereUniqueWithoutCardInput[]
+    createMany?: CardMemberCreateManyCardInputEnvelope
+    set?: CardMemberWhereUniqueInput | CardMemberWhereUniqueInput[]
+    disconnect?: CardMemberWhereUniqueInput | CardMemberWhereUniqueInput[]
+    delete?: CardMemberWhereUniqueInput | CardMemberWhereUniqueInput[]
+    connect?: CardMemberWhereUniqueInput | CardMemberWhereUniqueInput[]
+    update?: CardMemberUpdateWithWhereUniqueWithoutCardInput | CardMemberUpdateWithWhereUniqueWithoutCardInput[]
+    updateMany?: CardMemberUpdateManyWithWhereWithoutCardInput | CardMemberUpdateManyWithWhereWithoutCardInput[]
+    deleteMany?: CardMemberScalarWhereInput | CardMemberScalarWhereInput[]
+  }
+
+  export type CardCreateNestedOneWithoutMembersInput = {
+    create?: XOR<CardCreateWithoutMembersInput, CardUncheckedCreateWithoutMembersInput>
+    connectOrCreate?: CardCreateOrConnectWithoutMembersInput
+    connect?: CardWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutCardMembershipsInput = {
+    create?: XOR<UserCreateWithoutCardMembershipsInput, UserUncheckedCreateWithoutCardMembershipsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCardMembershipsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type EnumCardRoleFieldUpdateOperationsInput = {
+    set?: $Enums.CardRole
+  }
+
+  export type CardUpdateOneRequiredWithoutMembersNestedInput = {
+    create?: XOR<CardCreateWithoutMembersInput, CardUncheckedCreateWithoutMembersInput>
+    connectOrCreate?: CardCreateOrConnectWithoutMembersInput
+    upsert?: CardUpsertWithoutMembersInput
+    connect?: CardWhereUniqueInput
+    update?: XOR<XOR<CardUpdateToOneWithWhereWithoutMembersInput, CardUpdateWithoutMembersInput>, CardUncheckedUpdateWithoutMembersInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutCardMembershipsNestedInput = {
+    create?: XOR<UserCreateWithoutCardMembershipsInput, UserUncheckedCreateWithoutCardMembershipsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCardMembershipsInput
+    upsert?: UserUpsertWithoutCardMembershipsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCardMembershipsInput, UserUpdateWithoutCardMembershipsInput>, UserUncheckedUpdateWithoutCardMembershipsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -5563,6 +8625,40 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
+  export type NestedEnumCardStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.CardStatus | EnumCardStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.CardStatus[] | ListEnumCardStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CardStatus[] | ListEnumCardStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumCardStatusFilter<$PrismaModel> | $Enums.CardStatus
+  }
+
+  export type NestedEnumCardStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CardStatus | EnumCardStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.CardStatus[] | ListEnumCardStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CardStatus[] | ListEnumCardStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumCardStatusWithAggregatesFilter<$PrismaModel> | $Enums.CardStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumCardStatusFilter<$PrismaModel>
+    _max?: NestedEnumCardStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumCardRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.CardRole | EnumCardRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.CardRole[] | ListEnumCardRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CardRole[] | ListEnumCardRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumCardRoleFilter<$PrismaModel> | $Enums.CardRole
+  }
+
+  export type NestedEnumCardRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CardRole | EnumCardRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.CardRole[] | ListEnumCardRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CardRole[] | ListEnumCardRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumCardRoleWithAggregatesFilter<$PrismaModel> | $Enums.CardRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumCardRoleFilter<$PrismaModel>
+    _max?: NestedEnumCardRoleFilter<$PrismaModel>
+  }
+
   export type AccountCreateWithoutUserInput = {
     id?: string
     type: string
@@ -5620,6 +8716,56 @@ export namespace Prisma {
 
   export type SessionCreateManyUserInputEnvelope = {
     data: SessionCreateManyUserInput | SessionCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CardCreateWithoutOwnerInput = {
+    id?: string
+    title: string
+    description?: string | null
+    status?: $Enums.CardStatus
+    createdAt?: Date | string
+    members?: CardMemberCreateNestedManyWithoutCardInput
+  }
+
+  export type CardUncheckedCreateWithoutOwnerInput = {
+    id?: string
+    title: string
+    description?: string | null
+    status?: $Enums.CardStatus
+    createdAt?: Date | string
+    members?: CardMemberUncheckedCreateNestedManyWithoutCardInput
+  }
+
+  export type CardCreateOrConnectWithoutOwnerInput = {
+    where: CardWhereUniqueInput
+    create: XOR<CardCreateWithoutOwnerInput, CardUncheckedCreateWithoutOwnerInput>
+  }
+
+  export type CardCreateManyOwnerInputEnvelope = {
+    data: CardCreateManyOwnerInput | CardCreateManyOwnerInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CardMemberCreateWithoutUserInput = {
+    id?: string
+    role?: $Enums.CardRole
+    card: CardCreateNestedOneWithoutMembersInput
+  }
+
+  export type CardMemberUncheckedCreateWithoutUserInput = {
+    id?: string
+    cardId: string
+    role?: $Enums.CardRole
+  }
+
+  export type CardMemberCreateOrConnectWithoutUserInput = {
+    where: CardMemberWhereUniqueInput
+    create: XOR<CardMemberCreateWithoutUserInput, CardMemberUncheckedCreateWithoutUserInput>
+  }
+
+  export type CardMemberCreateManyUserInputEnvelope = {
+    data: CardMemberCreateManyUserInput | CardMemberCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -5683,6 +8829,60 @@ export namespace Prisma {
     expires?: DateTimeFilter<"Session"> | Date | string
   }
 
+  export type CardUpsertWithWhereUniqueWithoutOwnerInput = {
+    where: CardWhereUniqueInput
+    update: XOR<CardUpdateWithoutOwnerInput, CardUncheckedUpdateWithoutOwnerInput>
+    create: XOR<CardCreateWithoutOwnerInput, CardUncheckedCreateWithoutOwnerInput>
+  }
+
+  export type CardUpdateWithWhereUniqueWithoutOwnerInput = {
+    where: CardWhereUniqueInput
+    data: XOR<CardUpdateWithoutOwnerInput, CardUncheckedUpdateWithoutOwnerInput>
+  }
+
+  export type CardUpdateManyWithWhereWithoutOwnerInput = {
+    where: CardScalarWhereInput
+    data: XOR<CardUpdateManyMutationInput, CardUncheckedUpdateManyWithoutOwnerInput>
+  }
+
+  export type CardScalarWhereInput = {
+    AND?: CardScalarWhereInput | CardScalarWhereInput[]
+    OR?: CardScalarWhereInput[]
+    NOT?: CardScalarWhereInput | CardScalarWhereInput[]
+    id?: StringFilter<"Card"> | string
+    title?: StringFilter<"Card"> | string
+    description?: StringNullableFilter<"Card"> | string | null
+    status?: EnumCardStatusFilter<"Card"> | $Enums.CardStatus
+    createdAt?: DateTimeFilter<"Card"> | Date | string
+    ownerId?: StringFilter<"Card"> | string
+  }
+
+  export type CardMemberUpsertWithWhereUniqueWithoutUserInput = {
+    where: CardMemberWhereUniqueInput
+    update: XOR<CardMemberUpdateWithoutUserInput, CardMemberUncheckedUpdateWithoutUserInput>
+    create: XOR<CardMemberCreateWithoutUserInput, CardMemberUncheckedCreateWithoutUserInput>
+  }
+
+  export type CardMemberUpdateWithWhereUniqueWithoutUserInput = {
+    where: CardMemberWhereUniqueInput
+    data: XOR<CardMemberUpdateWithoutUserInput, CardMemberUncheckedUpdateWithoutUserInput>
+  }
+
+  export type CardMemberUpdateManyWithWhereWithoutUserInput = {
+    where: CardMemberScalarWhereInput
+    data: XOR<CardMemberUpdateManyMutationInput, CardMemberUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type CardMemberScalarWhereInput = {
+    AND?: CardMemberScalarWhereInput | CardMemberScalarWhereInput[]
+    OR?: CardMemberScalarWhereInput[]
+    NOT?: CardMemberScalarWhereInput | CardMemberScalarWhereInput[]
+    id?: StringFilter<"CardMember"> | string
+    cardId?: StringFilter<"CardMember"> | string
+    userId?: StringFilter<"CardMember"> | string
+    role?: EnumCardRoleFilter<"CardMember"> | $Enums.CardRole
+  }
+
   export type UserCreateWithoutAccountsInput = {
     id?: string
     firstName: string
@@ -5692,6 +8892,8 @@ export namespace Prisma {
     password?: string | null
     createdAt?: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
+    ownedCards?: CardCreateNestedManyWithoutOwnerInput
+    cardMemberships?: CardMemberCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -5703,6 +8905,8 @@ export namespace Prisma {
     password?: string | null
     createdAt?: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    ownedCards?: CardUncheckedCreateNestedManyWithoutOwnerInput
+    cardMemberships?: CardMemberUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -5730,6 +8934,8 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
+    ownedCards?: CardUpdateManyWithoutOwnerNestedInput
+    cardMemberships?: CardMemberUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -5741,6 +8947,8 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    ownedCards?: CardUncheckedUpdateManyWithoutOwnerNestedInput
+    cardMemberships?: CardMemberUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -5752,6 +8960,8 @@ export namespace Prisma {
     password?: string | null
     createdAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
+    ownedCards?: CardCreateNestedManyWithoutOwnerInput
+    cardMemberships?: CardMemberCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -5763,6 +8973,8 @@ export namespace Prisma {
     password?: string | null
     createdAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    ownedCards?: CardUncheckedCreateNestedManyWithoutOwnerInput
+    cardMemberships?: CardMemberUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -5790,6 +9002,8 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
+    ownedCards?: CardUpdateManyWithoutOwnerNestedInput
+    cardMemberships?: CardMemberUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -5801,6 +9015,234 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    ownedCards?: CardUncheckedUpdateManyWithoutOwnerNestedInput
+    cardMemberships?: CardMemberUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutOwnedCardsInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    username: string
+    email: string
+    password?: string | null
+    createdAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    cardMemberships?: CardMemberCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutOwnedCardsInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    username: string
+    email: string
+    password?: string | null
+    createdAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    cardMemberships?: CardMemberUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutOwnedCardsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutOwnedCardsInput, UserUncheckedCreateWithoutOwnedCardsInput>
+  }
+
+  export type CardMemberCreateWithoutCardInput = {
+    id?: string
+    role?: $Enums.CardRole
+    user: UserCreateNestedOneWithoutCardMembershipsInput
+  }
+
+  export type CardMemberUncheckedCreateWithoutCardInput = {
+    id?: string
+    userId: string
+    role?: $Enums.CardRole
+  }
+
+  export type CardMemberCreateOrConnectWithoutCardInput = {
+    where: CardMemberWhereUniqueInput
+    create: XOR<CardMemberCreateWithoutCardInput, CardMemberUncheckedCreateWithoutCardInput>
+  }
+
+  export type CardMemberCreateManyCardInputEnvelope = {
+    data: CardMemberCreateManyCardInput | CardMemberCreateManyCardInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutOwnedCardsInput = {
+    update: XOR<UserUpdateWithoutOwnedCardsInput, UserUncheckedUpdateWithoutOwnedCardsInput>
+    create: XOR<UserCreateWithoutOwnedCardsInput, UserUncheckedCreateWithoutOwnedCardsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutOwnedCardsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutOwnedCardsInput, UserUncheckedUpdateWithoutOwnedCardsInput>
+  }
+
+  export type UserUpdateWithoutOwnedCardsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    cardMemberships?: CardMemberUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutOwnedCardsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    cardMemberships?: CardMemberUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type CardMemberUpsertWithWhereUniqueWithoutCardInput = {
+    where: CardMemberWhereUniqueInput
+    update: XOR<CardMemberUpdateWithoutCardInput, CardMemberUncheckedUpdateWithoutCardInput>
+    create: XOR<CardMemberCreateWithoutCardInput, CardMemberUncheckedCreateWithoutCardInput>
+  }
+
+  export type CardMemberUpdateWithWhereUniqueWithoutCardInput = {
+    where: CardMemberWhereUniqueInput
+    data: XOR<CardMemberUpdateWithoutCardInput, CardMemberUncheckedUpdateWithoutCardInput>
+  }
+
+  export type CardMemberUpdateManyWithWhereWithoutCardInput = {
+    where: CardMemberScalarWhereInput
+    data: XOR<CardMemberUpdateManyMutationInput, CardMemberUncheckedUpdateManyWithoutCardInput>
+  }
+
+  export type CardCreateWithoutMembersInput = {
+    id?: string
+    title: string
+    description?: string | null
+    status?: $Enums.CardStatus
+    createdAt?: Date | string
+    owner: UserCreateNestedOneWithoutOwnedCardsInput
+  }
+
+  export type CardUncheckedCreateWithoutMembersInput = {
+    id?: string
+    title: string
+    description?: string | null
+    status?: $Enums.CardStatus
+    createdAt?: Date | string
+    ownerId: string
+  }
+
+  export type CardCreateOrConnectWithoutMembersInput = {
+    where: CardWhereUniqueInput
+    create: XOR<CardCreateWithoutMembersInput, CardUncheckedCreateWithoutMembersInput>
+  }
+
+  export type UserCreateWithoutCardMembershipsInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    username: string
+    email: string
+    password?: string | null
+    createdAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    ownedCards?: CardCreateNestedManyWithoutOwnerInput
+  }
+
+  export type UserUncheckedCreateWithoutCardMembershipsInput = {
+    id?: string
+    firstName: string
+    lastName: string
+    username: string
+    email: string
+    password?: string | null
+    createdAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    ownedCards?: CardUncheckedCreateNestedManyWithoutOwnerInput
+  }
+
+  export type UserCreateOrConnectWithoutCardMembershipsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCardMembershipsInput, UserUncheckedCreateWithoutCardMembershipsInput>
+  }
+
+  export type CardUpsertWithoutMembersInput = {
+    update: XOR<CardUpdateWithoutMembersInput, CardUncheckedUpdateWithoutMembersInput>
+    create: XOR<CardCreateWithoutMembersInput, CardUncheckedCreateWithoutMembersInput>
+    where?: CardWhereInput
+  }
+
+  export type CardUpdateToOneWithWhereWithoutMembersInput = {
+    where?: CardWhereInput
+    data: XOR<CardUpdateWithoutMembersInput, CardUncheckedUpdateWithoutMembersInput>
+  }
+
+  export type CardUpdateWithoutMembersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumCardStatusFieldUpdateOperationsInput | $Enums.CardStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: UserUpdateOneRequiredWithoutOwnedCardsNestedInput
+  }
+
+  export type CardUncheckedUpdateWithoutMembersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumCardStatusFieldUpdateOperationsInput | $Enums.CardStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ownerId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserUpsertWithoutCardMembershipsInput = {
+    update: XOR<UserUpdateWithoutCardMembershipsInput, UserUncheckedUpdateWithoutCardMembershipsInput>
+    create: XOR<UserCreateWithoutCardMembershipsInput, UserUncheckedCreateWithoutCardMembershipsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCardMembershipsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCardMembershipsInput, UserUncheckedUpdateWithoutCardMembershipsInput>
+  }
+
+  export type UserUpdateWithoutCardMembershipsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    ownedCards?: CardUpdateManyWithoutOwnerNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCardMembershipsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    ownedCards?: CardUncheckedUpdateManyWithoutOwnerNestedInput
   }
 
   export type AccountCreateManyUserInput = {
@@ -5821,6 +9263,20 @@ export namespace Prisma {
     id?: string
     sessionToken: string
     expires: Date | string
+  }
+
+  export type CardCreateManyOwnerInput = {
+    id?: string
+    title: string
+    description?: string | null
+    status?: $Enums.CardStatus
+    createdAt?: Date | string
+  }
+
+  export type CardMemberCreateManyUserInput = {
+    id?: string
+    cardId: string
+    role?: $Enums.CardRole
   }
 
   export type AccountUpdateWithoutUserInput = {
@@ -5881,6 +9337,74 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     sessionToken?: StringFieldUpdateOperationsInput | string
     expires?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CardUpdateWithoutOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumCardStatusFieldUpdateOperationsInput | $Enums.CardStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: CardMemberUpdateManyWithoutCardNestedInput
+  }
+
+  export type CardUncheckedUpdateWithoutOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumCardStatusFieldUpdateOperationsInput | $Enums.CardStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: CardMemberUncheckedUpdateManyWithoutCardNestedInput
+  }
+
+  export type CardUncheckedUpdateManyWithoutOwnerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumCardStatusFieldUpdateOperationsInput | $Enums.CardStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CardMemberUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: EnumCardRoleFieldUpdateOperationsInput | $Enums.CardRole
+    card?: CardUpdateOneRequiredWithoutMembersNestedInput
+  }
+
+  export type CardMemberUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cardId?: StringFieldUpdateOperationsInput | string
+    role?: EnumCardRoleFieldUpdateOperationsInput | $Enums.CardRole
+  }
+
+  export type CardMemberUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    cardId?: StringFieldUpdateOperationsInput | string
+    role?: EnumCardRoleFieldUpdateOperationsInput | $Enums.CardRole
+  }
+
+  export type CardMemberCreateManyCardInput = {
+    id?: string
+    userId: string
+    role?: $Enums.CardRole
+  }
+
+  export type CardMemberUpdateWithoutCardInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: EnumCardRoleFieldUpdateOperationsInput | $Enums.CardRole
+    user?: UserUpdateOneRequiredWithoutCardMembershipsNestedInput
+  }
+
+  export type CardMemberUncheckedUpdateWithoutCardInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    role?: EnumCardRoleFieldUpdateOperationsInput | $Enums.CardRole
+  }
+
+  export type CardMemberUncheckedUpdateManyWithoutCardInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    role?: EnumCardRoleFieldUpdateOperationsInput | $Enums.CardRole
   }
 
 

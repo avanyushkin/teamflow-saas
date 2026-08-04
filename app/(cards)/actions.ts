@@ -66,3 +66,24 @@ export async function getUsers() {
 
   })
 }
+
+export async function getMyCards() {
+  const session = await getServerSession(authConfig);
+  if (!session?.user?.id) {
+    return [];
+  }
+
+  return prisma.card.findMany({
+    where: {
+      OR: [
+        {ownerId: session.user.id},
+        {members: {some: {userId: session.user.id}}},
+      ],
+    },
+    include: {
+      owner: { select: {username: true}},
+      members: {select: {userId: true, role: true}},
+    },
+    orderBy: {createdAt: "desc"},
+  });
+}
