@@ -37,7 +37,7 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ["/", "/login", "/register"],
+    matcher: ["/", "/login", "/register", "/cards/[id]"],
     /*
       без matcher middleware выполняется вообще на каждый запрос - включая статику,
       _next/*, картинки и тд, то лишняя работа и потенциальные баги (наприер случайно звернуть
