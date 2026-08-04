@@ -73,7 +73,7 @@ export async function getMyCards() {
     return [];
   }
 
-  return prisma.card.findMany({
+  return prisma.card.findMany({ // поиск всех карточек, где я владелец либо участник
     where: {
       OR: [
         {ownerId: session.user.id},
@@ -86,4 +86,37 @@ export async function getMyCards() {
     },
     orderBy: {createdAt: "desc"},
   });
+}
+
+export async function getCardById(id: string) {
+  const session = await getServerSession(authConfig);
+  if (!session?.user?.id) {
+    return null;
+  }
+
+  const card = await prisma.card.findUnique({ // findUnique - ищем конкретную, поэтому не findMany
+    where: {id},
+    include : {
+      owner: {select: {id: true, username: true, firstName: true, lastName: true}},
+      members: {
+        select: {
+          role: true,
+          user: {select: {id: true, username: true, firstName: true, lastName: true}},
+        },
+      },
+    },
+  });
+
+  if (!card) {
+    return null;
+  }
+
+  // либо мы владельцы карточки, либо мы участники карточки
+  const hasAccess = card.ownerId === session.user.id || card.members.some((member) => member.user.id === session.user.id);
+
+  if (!hasAccess) {
+    return null;
+  }
+
+  return card;
 }
