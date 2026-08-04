@@ -4,14 +4,24 @@ import { getMyCards } from "@/app/(cards)/actions";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { TaskCard } from "@/components/task-card";
+import { useEffect } from "react";
 
 type MyCards = Awaited<ReturnType<typeof getMyCards>>;
 
 export function CardsBoard({cards}: {cards: MyCards}) {
   const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 300);
+
+    return () => clearTimeout(timeout);
+  }, [query]);
 
   const filteredCards = cards.filter((card) => (
-    card.title.toLowerCase().includes(query.toLowerCase())
+    card.title.toLowerCase().includes(debouncedQuery.toLowerCase())
   ));
 
   return (
