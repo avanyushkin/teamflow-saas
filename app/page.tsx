@@ -6,6 +6,7 @@ import { SignOutButton } from "@/components/sign-out-button";
 import CardDialog from "@/components/create-card-dialog";
 import { getMyCards } from "@/app/(cards)/actions";
 import { TaskCard } from "@/components/task-card"
+import { CardsBoard } from "@/components/cards-board";
 
 export default async function Home() {
   const session = await getServerSession(authConfig);
@@ -20,13 +21,7 @@ export default async function Home() {
         <CardDialog />
       </div>
 
-      <div className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-        {
-          cards.map((card) => (
-            <TaskCard key = {card.id} card = {card}/>
-          ))
-        }
-      </div>
+      <CardsBoard cards = {cards} />
     </>
   );
 }
