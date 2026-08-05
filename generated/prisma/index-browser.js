@@ -152,6 +152,22 @@ exports.Prisma.SessionScalarFieldEnum = {
   expires: 'expires'
 };
 
+exports.Prisma.CardScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  status: 'status',
+  createdAt: 'createdAt',
+  ownerId: 'ownerId'
+};
+
+exports.Prisma.CardMemberScalarFieldEnum = {
+  id: 'id',
+  cardId: 'cardId',
+  userId: 'userId',
+  role: 'role'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -166,12 +182,22 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.CardStatus = exports.$Enums.CardStatus = {
+  OPEN: 'OPEN',
+  CLOSED: 'CLOSED'
+};
 
+exports.CardRole = exports.$Enums.CardRole = {
+  ADMIN: 'ADMIN',
+  MEMBER: 'MEMBER'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
   Account: 'Account',
-  Session: 'Session'
+  Session: 'Session',
+  Card: 'Card',
+  CardMember: 'CardMember'
 };
 
 /**
