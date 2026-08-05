@@ -145,3 +145,4 @@ app/page.tsx - это серверный компонент, а строка п�
 1. Создаем новый запрос getProfileData к БД. Делаем его заного, а не берем из session, так как в session.user лежит только id/name/email (то, что мы сами положили в JWT-callback)
  - там нет firstName/lastName/username по отдельности.
 2. Создаем роутинг app/profile/page.tsx 
+3. Добавил место под будущий чат участников карточки через WebSocket
