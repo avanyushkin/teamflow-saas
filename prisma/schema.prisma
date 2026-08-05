@@ -18,6 +18,9 @@ model User {
 
     accounts Account[]
     sessions Session[]
+
+    ownedCards Card[] @relation("OwnedCards")
+    cardMemberships CardMember[]
 }
 
 model Account {
@@ -46,3 +49,37 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+enum CardStatus {
+  OPEN
+  CLOSED
+}
+
+enum CardRole {
+  ADMIN
+  MEMBER
+}
+
+model Card {
+  id String @id @default(cuid())
+  title String
+  description String?
+  status CardStatus @default(OPEN)
+  createdAt DateTime @default(now())
+
+  ownerId String
+  owner User @relation("OwnedCards", fields: [ownerId], references: [id])
+
+  members CardMember[]
+}
+
+model CardMember {
+  id String @id @default(cuid())
+  cardId String
+  userId String
+  role CardRole @default(MEMBER)
+
+  card Card @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([cardId, userId])
+}
