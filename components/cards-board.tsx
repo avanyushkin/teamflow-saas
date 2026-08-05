@@ -5,8 +5,26 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { TaskCard } from "@/components/task-card";
 import { useEffect } from "react";
+import { LevenshteinDistance } from "@/lib/levenshtein";
 
 type MyCards = Awaited<ReturnType<typeof getMyCards>>;
+
+function isFuzzyMatch(title: string, query: string): boolean {
+  if (!query) {
+    return true;
+  }
+
+  const lowerTitle = title.toLowerCase();
+  const lowerQuery = query.toLowerCase();
+
+  if (lowerTitle.includes(lowerQuery)) {
+    return true;
+  }
+
+  const threshold = Math.max(1, Math.floor(lowerQuery.length * 0.3));
+
+  return lowerTitle.split(" ").some((word) => LevenshteinDistance(word, lowerQuery) <= threshold);
+}
 
 export function CardsBoard({cards}: {cards: MyCards}) {
   const [query, setQuery] = useState("");
@@ -21,7 +39,7 @@ export function CardsBoard({cards}: {cards: MyCards}) {
   }, [query]);
 
   const filteredCards = cards.filter((card) => (
-    card.title.toLowerCase().includes(debouncedQuery.toLowerCase())
+    isFuzzyMatch(card.title, debouncedQuery)
   ));
 
   return (
