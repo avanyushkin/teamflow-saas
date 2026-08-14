@@ -1,5 +1,12 @@
+/*
+  Серверная компонента. Загружает конкретную карточку, узнает кто сейчас смотрит страницу и решает - может 
+  ли именно этот пользователь управлять роляими
+*/
 import {getCardById} from "@/app/(cards)/actions";
 import {notFound} from "next/navigation";
+import { getServerSession } from "next-auth";
+import {authConfig} from "@/app/configs/auth";
+import { MemberRow } from "@/components/member-row";
 
 export default async function CardPage({params}: {params: Promise<{id: string}>}) {
     const {id} = await params;
@@ -8,6 +15,13 @@ export default async function CardPage({params}: {params: Promise<{id: string}>}
     if (!card) {
         notFound();
     }
+
+    const session = await getServerSession(authConfig);
+    const isOwner = card.ownerId === session?.user?.id;
+    const isAdmin = card.members.some(
+      (member) => member.user.id === session?.user?.id && member.role === "ADMIN"
+    );
+    const canManage = isOwner || isAdmin;
 
     return (
       <>
@@ -27,11 +41,9 @@ export default async function CardPage({params}: {params: Promise<{id: string}>}
             <h2 className = "mt-6 font-medium">Owner</h2>
             <p>{card.owner.firstName} {card.owner.lastName} ({card.owner.username})</p>
             <h2 className = "mt-6 font-medium">Members</h2>
-            <ul>
+            <ul className = "flex flex-col gap-2">
               {card.members.map((member) => (
-                <li key = {member.user.id}>
-                    {member.user.firstName} {member.user.lastName} - {member.role}
-                </li>
+                <MemberRow key = {member.user.id} cardId = {card.id} member = {member} canManage = {canManage}/>
               ))}
             </ul>
           </div>
