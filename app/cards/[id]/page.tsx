@@ -7,6 +7,8 @@ import {notFound} from "next/navigation";
 import { getServerSession } from "next-auth";
 import {authConfig} from "@/app/configs/auth";
 import { MemberRow } from "@/components/member-row";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default async function CardPage({params}: {params: Promise<{id: string}>}) {
     const {id} = await params;
@@ -34,6 +36,11 @@ export default async function CardPage({params}: {params: Promise<{id: string}>}
             </aside>
           
           <div className = "p-6 flex-1">
+            <Link href = "/">
+              <Button variant = "ghost" size = "sm" className = "mb-4">
+                Back to Home
+              </Button>
+            </Link>
             <h1 className = "text-2xl font-semibold">{card.title}</h1>
             <p className = "text-muted-foreground">{card.description}</p>
             <p>Status: {card.status}</p>

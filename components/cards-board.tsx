@@ -6,8 +6,8 @@ import { Input } from "@/components/ui/input";
 import { TaskCard } from "@/components/task-card";
 import { useEffect } from "react";
 import { LevenshteinDistance } from "@/lib/levenshtein";
-import { useTransition } from "react";
-import { Button } from "./ui/button";
+import { useTransition, startTransition } from "react";
+import { Button } from "@/components/ui/button";
 
 type MyCards = Awaited<ReturnType<typeof getMyCards>>;
 
@@ -31,7 +31,7 @@ function isFuzzyMatch(title: string, query: string): boolean {
 export function CardsBoard({cards}: {cards: MyCards}) {
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
-  const [isPending, startTransition] = useTransition();
+  const [isPending, startSearchTransition] = useTransition();
 
   const [statusFilter, setStatusFilter] = useState<"ALL" | "OPEN" | "CLOSED">("ALL");
 
@@ -43,7 +43,7 @@ export function CardsBoard({cards}: {cards: MyCards}) {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      startTransition(() => {
+      startSearchTransition(() => {
         setDebouncedQuery(query);
       });
     }, 300);
@@ -67,7 +67,7 @@ export function CardsBoard({cards}: {cards: MyCards}) {
             onClick = {() => handleStatusChange(status)}>{status}</Button>
         ))}
       </div>
-      <div className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+      <div className = "grid grid-cols-1 sm:grid-cols-2 gap-8 p-8">
         {filteredCards.map((card) => (
             <TaskCard key = {card.id} card = {card}/>
         ))}

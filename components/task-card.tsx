@@ -12,7 +12,7 @@ export function TaskCard({card}: {card: MyCard}) {
   return (
     <>
       <Link href = {`/cards/${card.id}`}>
-        <Card>
+        <Card className = "min-h-[220px] shadow-lg hover:shadow-xl transition-shadow">
           <CardHeader>
             <CardTitle>{card.title}</CardTitle>
           </CardHeader>
