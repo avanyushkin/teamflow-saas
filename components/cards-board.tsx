@@ -8,6 +8,8 @@ import { useEffect } from "react";
 import { LevenshteinDistance } from "@/lib/levenshtein";
 import { useTransition, startTransition } from "react";
 import { Button } from "@/components/ui/button";
+import { ScrollView, ScrollViewHandle } from "@/components/scroll-view";
+import { RefObject } from "react";
 
 type MyCards = Awaited<ReturnType<typeof getMyCards>>;
 
@@ -28,7 +30,7 @@ function isFuzzyMatch(title: string, query: string): boolean {
   return lowerTitle.split(" ").some((word) => LevenshteinDistance(word, lowerQuery) <= threshold);
 }
 
-export function CardsBoard({cards}: {cards: MyCards}) {
+export function CardsBoard({cards, scrollViewRef}: {cards: MyCards; scrollViewRef: RefObject<ScrollViewHandle | null>}) {
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [isPending, startSearchTransition] = useTransition();
@@ -67,11 +69,11 @@ export function CardsBoard({cards}: {cards: MyCards}) {
             onClick = {() => handleStatusChange(status)}>{status}</Button>
         ))}
       </div>
-      <div className = "grid grid-cols-1 sm:grid-cols-2 gap-8 p-8">
+      <ScrollView ref = {scrollViewRef} className = "grid grid-cols-1 sm:grid-cols-2 gap-8 p-8">
         {filteredCards.map((card) => (
             <TaskCard key = {card.id} card = {card}/>
         ))}
-      </div>
+      </ScrollView>
     </div>
   );
 }

@@ -11,7 +11,7 @@ type MyCard = Awaited<ReturnType<typeof getMyCards>>[number];
 export function TaskCard({card}: {card: MyCard}) {
   return (
     <>
-      <Link href = {`/cards/${card.id}`}>
+      <Link href={`/cards/${card.id}`} data-scroll-id={card.id}>
         <Card className = "min-h-[220px] shadow-lg hover:shadow-xl transition-shadow">
           <CardHeader>
             <CardTitle>{card.title}</CardTitle>
