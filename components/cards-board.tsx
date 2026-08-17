@@ -31,6 +31,7 @@ function isFuzzyMatch(title: string, query: string): boolean {
 }
 
 export function CardsBoard({cards, scrollViewRef}: {cards: MyCards; scrollViewRef: RefObject<ScrollViewHandle | null>}) {
+  // throw new Error("Test: CardsBoard crashed");
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [isPending, startSearchTransition] = useTransition();

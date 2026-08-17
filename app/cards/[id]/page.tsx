@@ -9,6 +9,7 @@ import {authConfig} from "@/app/configs/auth";
 import { MemberRow } from "@/components/member-row";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { ErrorBoundary } from "@/components/error-boundary";
 
 export default async function CardPage({params}: {params: Promise<{id: string}>}) {
     const {id} = await params;
@@ -28,12 +29,14 @@ export default async function CardPage({params}: {params: Promise<{id: string}>}
     return (
       <>
         <div className = "flex min-h-screen">
-            <aside className = "w-72 shrink-0 border-r p-4">
-              <h2 className = "font-medium mb-2">Team Chat</h2>
-              <p className = "text-sm text-muted-foreground">
-                Chat is coming soon - real-time messaging will be added later via WebSocket.
-              </p>
-            </aside>
+            <ErrorBoundary fallback = {<p className = "text-sm text-red-500 p-4">Chat failed to load.</p>}>
+              <aside className = "w-72 shrink-0 border-r p-4">
+                <h2 className = "font-medium mb-2">Team Chat</h2>
+                <p className = "text-sm text-muted-foreground">
+                  Chat is coming soon - real-time messaging will be added later via WebSocket.
+                </p>
+              </aside>
+            </ErrorBoundary>
           
           <div className = "p-6 flex-1">
             <Link href = "/">

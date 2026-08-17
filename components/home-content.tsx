@@ -8,6 +8,7 @@ import { CardsBoard } from "@/components/cards-board";
 import { ScrollViewHandle } from "@/components/scroll-view";
 import { getMyCards } from "@/app/(cards)/actions";
 import { Button } from "@/components/ui/button";
+import { ErrorBoundary } from "@/components/error-boundary";
 
 const CardDialog = lazy(() => import("@/components/create-card-dialog"));
 type MyCards = Awaited<ReturnType<typeof getMyCards>>;
@@ -38,8 +39,10 @@ export function HomeContent({
                     <UserMenu name={userName} />
                 </div>
             </div>
-
-            <CardsBoard cards={cards} scrollViewRef={scrollViewRef} />
+            
+            <ErrorBoundary fallback = {<p className = "p-4 text-sm text-red-500">Something went wrong loading the cards.</p>}>
+              <CardsBoard cards={cards} scrollViewRef={scrollViewRef} />
+            </ErrorBoundary>
         </>
     );
 }
