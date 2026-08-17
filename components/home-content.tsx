@@ -1,13 +1,15 @@
 "use client";
 
-import { useRef } from "react";
-import CardDialog from "@/components/create-card-dialog";
+import { useRef, lazy, Suspense } from "react";
+// import CardDialog from "@/components/create-card-dialog";
 import { SignOutButton } from "@/components/sign-out-button";
 import { UserMenu } from "@/components/user-menu";
 import { CardsBoard } from "@/components/cards-board";
 import { ScrollViewHandle } from "@/components/scroll-view";
 import { getMyCards } from "@/app/(cards)/actions";
+import { Button } from "@/components/ui/button";
 
+const CardDialog = lazy(() => import("@/components/create-card-dialog"));
 type MyCards = Awaited<ReturnType<typeof getMyCards>>;
 
 export function HomeContent({
@@ -29,7 +31,9 @@ export function HomeContent({
                     <p>{userEmail}</p>
                 </div>
                 <div className="flex items-center gap-2">
-                    <CardDialog onCreated={() => scrollViewRef.current?.scrollToTop()} />
+                    <Suspense fallback = {<Button disabled>Loading...</Button>}>
+                      <CardDialog onCreated={() => scrollViewRef.current?.scrollToTop()} />
+                    </Suspense>
                     <SignOutButton />
                     <UserMenu name={userName} />
                 </div>
