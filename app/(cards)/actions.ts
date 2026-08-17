@@ -162,3 +162,42 @@ export async function getProfileData() { // получение данных по
 
   return {...user, closedCount, openCount, adminCount};
 }
+
+export async function updateMemberRole(cardId: string, targetUserId: string, newRole: "ADMIN" | "MEMBER") {
+  const session = await getServerSession(authConfig);
+  if (!session?.user?.id) {
+    return {ok: false, message: "Not authenticated"};
+  }
+  const card = await prisma.card.findUnique({
+    where: {id: cardId},
+    include: {
+      members: {
+        select: {
+          userId: true,
+          role: true
+        }
+      }
+    }
+  });
+  if (!card) {
+    return {ok: false, message: "Card not found"};
+  }
+
+  const isOwner = card.ownerId === session.user.id;
+  const isAdmin = card.members.some(
+    (member) => member.userId === session.user.id && member.role === "ADMIN"
+  );
+  if (!isOwner && !isAdmin) {
+    return {ok: false, message: "Not authorized"};
+  }
+  if (targetUserId === card.ownerId) {
+    return {ok: false, message: "Cannot change the owner`s role"};
+  }
+
+  await prisma.cardMember.update({
+        where: { cardId_userId: { cardId, userId: targetUserId } },
+        data: { role: newRole },
+    });
+  
+  return {ok: true};
+}
