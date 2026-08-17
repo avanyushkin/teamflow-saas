@@ -30,7 +30,7 @@ type usersType = {
   lastName: string
 };
 
- export default function CardDialog() {
+ export default function CardDialog({onCreated}: {onCreated?: () => void}) {
     const [open, setOpen] = useState(false);
     const router = useRouter();
     const [users, setUsers] = useState<usersType[]>([]);
@@ -53,6 +53,7 @@ type usersType = {
         setOpen(false);
         form.reset();
         router.refresh();
+        onCreated?.();
       } else {
         form.setError("root", { message: result.message });
       }
