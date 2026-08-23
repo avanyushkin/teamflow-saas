@@ -49,37 +49,113 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-enum CardStatus {
+enum ProjectStatus {
   OPEN
   CLOSED
 }
 
-enum CardRole {
+enum ProjectRole {
   ADMIN
   MEMBER
 }
 
-model Card {
+model Project {
   id String @id @default(cuid())
   title String
   description String?
-  status CardStatus @default(OPEN)
+  status ProjectStatus @default(OPEN)
   createdAt DateTime @default(now())
 
   ownerId String
   owner User @relation("OwnedCards", fields: [ownerId], references: [id])
 
-  members CardMember[]
+  members ProjectMember[]
 }
 
-model CardMember {
+model ProjectMember {
   id String @id @default(cuid())
-  cardId String
+  projectId String
   userId String
   role CardRole @default(MEMBER)
 
-  card Card @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  card Card @relation(fields: [projectId], references: [id], onDelete: Cascade)
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([cardId, userId])
+  @@unique([projectId, userId])
+}
+
+enum MembershipRole {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+model Organization {
+  id String @id @default(cuid())
+  name String
+  slug String @unique
+  createdAt DateTime @default(now())
+
+  memberships Membership[]
+  projects Project[]
+  subscription Subscription?
+}
+
+model Membership {
+  id String @id @default(cuid())
+  role MembershipRole @default(MEMBER)
+  userId String
+  organizationId String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  organization Organization @relation(fields: [organizationId], references: [id])
+
+  @@unique([userId, organizationId])
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
+
+model Task {
+  id          String     @id @default(cuid())
+  title       String
+  description String?
+  status      TaskStatus @default(TODO)
+  dueDate     DateTime?
+  projectId   String
+  assigneeId  String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  project     Project    @relation(fields: [projectId], references: [id])
+  assignee    User?      @relation(fields: [assigneeId], references: [id])
+  comments    Comment[]
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  taskId    String
+  authorId  String
+  createdAt DateTime @default(now())
+
+  task      Task     @relation(fields: [taskId], references: [id])
+  author    User     @relation(fields: [authorId], references: [id])
+}
+
+enum SubscriptionPlan { FREE PRO }
+enum SubscriptionStatus { ACTIVE CANCELED PAST_DUE }
+
+model Subscription {
+  id               String             @id @default(cuid())
+  organizationId   String             @unique
+  stripeCustomerId String?
+  plan             SubscriptionPlan   @default(FREE)
+  status           SubscriptionStatus @default(ACTIVE)
+
+  organization     Organization       @relation(fields: [organizationId], references: [id])
 }

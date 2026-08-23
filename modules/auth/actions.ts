@@ -9,7 +9,7 @@
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import z from "zod";
-import { formSchemaRegister } from "@/app/(auth)/zod-schemas";
+import { formSchemaRegister } from "./schemas";
 
 type RegisterResult = | {ok: true} | {ok: false, field?: "username"
     | "email" | "root"; message: string };
@@ -33,7 +33,7 @@ export async function registerUser(values: RegisterFormDataResult): Promise<Regi
   - провера ункальности username/email до того, как попытаться создать запись,
     чтобы вернуть онятную ошибку
   - создать запись User через prisma.user.create
-  - вернуть результат клиенту - успех или структурровнную ошибку      
+  - вернуть результат клиенту - успех или структурровнную ошибку
 */
   const parsed = formSchemaRegister.safeParse(values);
   if (!parsed.success) {

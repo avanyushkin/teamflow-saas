@@ -8,15 +8,14 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { getServerSession } from "next-auth";
-import { authConfig } from "@/app/configs/auth";
-import { formSchemaCard } from "./zod-schemas/card";
+import { getCurrentSession } from "@/lib/auth";
+import { formSchemaCard } from "./schemas";
 import z from "zod";
 
 type CreateCardResult = {ok: true} | {ok: false; message: string};
 
 export async function createCard(values: z.infer<typeof formSchemaCard>): Promise<CreateCardResult> {
-  const session = await getServerSession(authConfig);
+  const session = await getCurrentSession();
   if (!session?.user?.id) {
     return {ok: false, message: "Not authenticated"};
   }
@@ -58,7 +57,7 @@ export async function createCard(values: z.infer<typeof formSchemaCard>): Promis
 }
 
 export async function getUsers() {
-  const session = await getServerSession(authConfig);
+  const session = await getCurrentSession();
   return prisma.user.findMany({
     where: session?.user?.id ? {id: { not: session.user.id}} : {}, // исключаем самого себя из списка, тк я и так владелец каточки
     select: {id: true, username: true, firstName: true, lastName: true}, // берем только то, что нужно для отображения в списке
@@ -68,7 +67,7 @@ export async function getUsers() {
 }
 
 export async function getMyCards() {
-  const session = await getServerSession(authConfig);
+  const session = await getCurrentSession();
   if (!session?.user?.id) {
     return [];
   }
@@ -89,7 +88,7 @@ export async function getMyCards() {
 }
 
 export async function getCardById(id: string) {
-  const session = await getServerSession(authConfig);
+  const session = await getCurrentSession();
   if (!session?.user?.id) {
     return null;
   }
@@ -121,50 +120,8 @@ export async function getCardById(id: string) {
   return card;
 }
 
-export async function getProfileData() { // получение данных пользователя для страницы /profile
-  const session = await getServerSession(authConfig);
-  if (!session?.user?.id) {
-    return null;
-  }
-
-  const user = await prisma.user.findUnique({
-    where: {id: session.user.id},
-    select: {firstName: true, lastName: true, username: true, email: true},
-  });
-
-  if (!user) {
-    return null;
-  }
-
-  const [closedCount, openCount, adminCount] = await Promise.all([
-    prisma.card.count({
-      where: {
-        status: "CLOSED",
-        OR: [
-          { ownerId: session.user.id },
-          { members: {some: {userId: session.user.id}}},
-        ],
-      },
-    }),
-    prisma.card.count({
-      where: {
-        status: "OPEN",
-        OR: [
-          { ownerId: session.user.id },
-          { members: {some: {userId: session.user.id}}},
-        ],
-      },
-    }),
-    prisma.cardMember.count({ // ищем все карточки, где у текущего юзера роль ADMIN
-      where: {userId: session.user.id, role: "ADMIN"},
-    }),
-  ]);
-
-  return {...user, closedCount, openCount, adminCount};
-}
-
 export async function updateMemberRole(cardId: string, targetUserId: string, newRole: "ADMIN" | "MEMBER") {
-  const session = await getServerSession(authConfig);
+  const session = await getCurrentSession();
   if (!session?.user?.id) {
     return {ok: false, message: "Not authenticated"};
   }
@@ -198,6 +155,6 @@ export async function updateMemberRole(cardId: string, targetUserId: string, new
         where: { cardId_userId: { cardId, userId: targetUserId } },
         data: { role: newRole },
     });
-  
+
   return {ok: true};
 }

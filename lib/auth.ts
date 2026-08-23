@@ -1,5 +1,15 @@
 /*
-    Конфгурация NextAuth - какие провайдеры входа допустимы
+    Конфигурация NextAuth и хелпер для чтения текущей сессии - какие провайдеры входа допустимы.
+
+    Живет в lib/, а не в modules/auth/, осознанно: чтение сессии (getCurrentSession) - это
+    сквозная возможность, нужная почти каждому модулю (cards, profile, ...). Если бы authConfig
+    жил внутри modules/auth, любой другой модуль, которому нужна сессия, был бы вынужден
+    импортировать modules/auth напрямую - а это запрещенная "параллельная" зависимость между
+    модулями. lib/ - общий инфраструктурный слой ниже modules/, поэтому опираться на него могут
+    все модули одновременно, не зависят при этом друг от друга.
+
+    Бизнес-логика конкретно вокруг регистрации (registerUser, формы логина/регистрации) при этом
+    осталась в modules/auth - она нужна только auth-страницам, а не всему приложению.
 */
 import type { AuthOptions } from "next-auth"; // тип конфига NextAuth
 import GoogleProvider from "next-auth/providers/google"; // готовый OAuth провайдер Google
@@ -7,16 +17,17 @@ import GoogleProvider from "next-auth/providers/google"; // готовый OAuth
 import CredentialsProvider from "next-auth/providers/credentials";
 // провайдер для кастомной авторизации через логин/пароль
 import bcrypt from "bcryptjs"; // для хэширования пароля
+import { getServerSession } from "next-auth";
 import { prisma } from "@/lib/prisma"; // для работы с БД через Prisma
 import GithubProvider from "next-auth/providers/github";
 
 export const authConfig: AuthOptions = {
     providers: [
         GoogleProvider({ // конфигурация провайдера Google, cloud.google.com -> Credentials -> OAuth 2.0 Client IDs
-            clientId: process.env.GOOGLE_CLIENT_ID!, 
+            clientId: process.env.GOOGLE_CLIENT_ID!,
             clientSecret: process.env.GOOGLE_SECRET!
         }),
-    // в отличие от GoogleProvider, у CredentialsProider нет готового OAuth флоу - 
+    // в отличие от GoogleProvider, у CredentialsProider нет готового OAuth флоу -
     // мы сами описываем как проверять логин/пароль и возвращать объект пользователя
         CredentialsProvider({
             name: "Credentials",
@@ -34,11 +45,11 @@ export const authConfig: AuthOptions = {
                 if (!user) {
                     return null; // если пользователь не найден, возвращаем null - авторизация не удалась
                 }
-        
+
                 if (!user.password) {
                     return null; // случай если у пользователя нет пароля (зерагался через гугл)
                 }
-        
+
                 const isValid = await bcrypt.compare(credentials.password, user.password);
                 if (!isValid) {
                     return null; // пароли не совпадают
@@ -94,7 +105,7 @@ export const authConfig: AuthOptions = {
             const fullName = profile?.name?.trim() || new_username;
             const [firstName, ...rest] = fullName.split(" ");
             const lastName = rest.join(" ") || "-";
-            
+
             // создадим пользователя в БД
             const createdUser = await prisma.user.create({
                 data: {
@@ -110,6 +121,10 @@ export const authConfig: AuthOptions = {
             return true;
         }
     }
+}
+
+export function getCurrentSession() {
+    return getServerSession(authConfig);
 }
 /*
 Auth-цепочка на бэкенде теперь целиком собрана: регистрация → хэш пароля → уникальность; логин → bcrypt.compare → JWT-сессия с user.id.

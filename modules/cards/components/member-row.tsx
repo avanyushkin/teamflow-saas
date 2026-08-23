@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { updateMemberRole } from "@/app/(cards)/actions";
+import { updateMemberRole } from "../actions";
 import { Loader2 } from "lucide-react";
 
 type Member = {

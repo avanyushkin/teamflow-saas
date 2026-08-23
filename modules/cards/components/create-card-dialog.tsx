@@ -6,10 +6,10 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { formSchemaCard } from "@/app/(cards)/zod-schemas/card";
-import { createCard } from "@/app/(cards)/actions";
+import { formSchemaCard } from "../schemas";
+import { createCard, getUsers } from "../actions";
 
-import { Dialog, DialogTrigger, DialogContent, 
+import { Dialog, DialogTrigger, DialogContent,
          DialogHeader, DialogTitle
  } from "@/components/ui/dialog";
 
@@ -20,7 +20,6 @@ import { Dialog, DialogTrigger, DialogContent,
 import { useEffect, useState } from "react";
 import z from "zod";
 import { useRouter } from "next/navigation";
-import { getUsers } from "@/app/(cards)/actions";
 import { Checkbox } from "@/components/ui/checkbox";
 
 type usersType = {
@@ -40,7 +39,7 @@ type usersType = {
         getUsers().then(setUsers);
       }
     }, [open]);
-    
+
     const form = useForm<z.infer<typeof formSchemaCard>>({
       resolver: zodResolver(formSchemaCard),
       defaultValues: {title: "", description: "", memberIds: [], },
@@ -77,7 +76,7 @@ type usersType = {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Create New Card</DialogTitle>
-          </DialogHeader>               
+          </DialogHeader>
           <form onSubmit = {form.handleSubmit(onSubmit)} className = "flex flex-col gap-4">
             {form.formState.errors.root && (
               <p className = "text-sm text-red-500">{form.formState.errors.root?.message}</p>
@@ -107,7 +106,7 @@ type usersType = {
             </div>
 
             <Button type = "submit">Create</Button>
-          </form>           
+          </form>
         </DialogContent>
       </Dialog>
     </>

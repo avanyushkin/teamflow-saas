@@ -2,7 +2,7 @@
   серверная компонента, показывает статус, владельца, количество участников карточки
 */
 
-import { getMyCards } from "@/app/(cards)/actions";
+import type { getMyCards } from "../actions";
 import {Card, CardHeader, CardTitle, CardContent} from "@/components/ui/card";
 import Link from "next/link";
 
@@ -26,7 +26,7 @@ export function TaskCard({card}: {card: MyCard}) {
             <span className = "text-sm text-muted-foreground">
               Members: {card.members.length}
             </span>
-          </CardContent> 
+          </CardContent>
         </Card>
       </Link>
     </>

@@ -2,7 +2,7 @@
     nextjs app router endpoint для NextAuth (catch-all роут /api/auth/*)
 */
 import NextAuth from "next-auth"; // фабрика для создания эндпоинта NextAuth
-import { authConfig } from "@/app/configs/auth"; // конфиг провайдеров
+import { authConfig } from "@/lib/auth"; // конфиг провайдеров
 
 const handler = NextAuth(authConfig); // создает единый хендлер на основе конфига
 

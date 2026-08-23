@@ -1,11 +1,11 @@
 "use client";
 
-import { getMyCards } from "@/app/(cards)/actions";
+import type { getMyCards } from "../actions";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { TaskCard } from "@/components/task-card";
+import { TaskCard } from "./task-card";
 import { useEffect } from "react";
-import { LevenshteinDistance } from "@/lib/levenshtein";
+import { LevenshteinDistance } from "../utils/levenshtein";
 import { useTransition, startTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { ScrollView, ScrollViewHandle } from "@/components/scroll-view";
